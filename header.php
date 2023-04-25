@@ -1,7 +1,7 @@
 <header class="bg-gray-800 shadow-md sticky">
     <nav class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
-            <a href="#" class="text-2xl font-semibold text-white">Latest News <span class="text-xs">from <span class="text-base italic">frontpagetech</span> & <span class="text-base italic">macrumors</span> </span></a>
+            <a href="index.php" class="text-2xl font-semibold text-white">Latest News <span class="text-xs">from <span class="text-base italic">frontpagetech</span> & <span class="text-base italic">macrumors</span> </span></a>
             <div class="hidden lg:flex" id="nav-items">
                 <a href="index.php" class="mx-4 text-white hover:text-gray-300">Home</a>
                 <div class="relative dropdown inline-block">

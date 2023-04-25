@@ -43,4 +43,4 @@ carouselIndicators.forEach((indicator, index) => {
 });
 
 // Auto-cycle the carousel every 3 seconds
-// setInterval(moveCarouselRight, 3000);
+setInterval(moveCarouselRight, 3000);
