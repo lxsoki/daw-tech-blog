@@ -16,9 +16,15 @@
     <main class="container mx-auto px-6 py-8 flex-grow">
         <?php include 'carousel.php'; ?>
         <!-- articles container -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="mainContainer">
+            <article id="ignore-this" class="rounded-md shadow-md bg-gray-800 p-6">
+                <button class="rounded-md p-2 bg-slate-400" 
+                onclick="getAllRecords()">get all records</button>
+                <button class="rounded-md p-2 bg-slate-400" id="addRecordBtn" 
+                onclick="addRecord()">add record</button>
+            </article>
 
-            <article class="rounded-md shadow-md bg-gray-800 p-6">
+            <!-- <article class="rounded-md shadow-md bg-gray-800 p-6">
                 <div class="flex flex-col md:flex-row items-center">
                     <div class="w-full md:w-2/3">
                         <h2 class="text-xl font-bold mb-4">Apple Announces Apple Music Classical, Now Available on the App Store</h2>
@@ -100,11 +106,38 @@
                         <img src="assets/ip14-yellow-800x450.jpg" alt="iphon14-yellow-alt" class="w-full h-auto rounded-md">
                     </div>
                 </div>
-            </article>
+            </article> -->
 
         </div>
         <!-- articles container end -->
     </main>
+
+    <div id="addRecordModal" class="fixed inset-0 hidden w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-20">
+        <div class="bg-gray-700 p-8 rounded-md w-full max-w-md">
+            <h2 class="text-2xl font-semibold mb-4">Add a new article</h2>
+            <form>
+                <div class="mb-4">
+                    <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                    <input type="text" id="modal-title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+                <div class="mb-4">
+                <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
+                    <textarea id="modal-message" 
+                            rows="4" 
+                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                            placeholder="Write your thoughts here...">
+                    </textarea>
+                </div>
+                <div class="flex items-center justify-between">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                            type="button" onclick="submitNewRecord()"
+                            id="submitRecordBtn">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <?php include 'footer.php'; ?>
 
@@ -112,5 +145,21 @@
     <script src="index.js"></script>
     <script src="carousel.js"></script>
 </body>
+<script>
+     document.getElementById('addRecordBtn').addEventListener('click', function() {
+        document.getElementById('addRecordModal').classList.remove('hidden');
+    });
+
+    document.getElementById('addRecordModal').addEventListener('click', function(event) {
+        if (event.target === event.currentTarget) {
+            document.getElementById('addRecordModal').classList.add('hidden');
+        }
+    });
+
+    document.getElementById('submitRecordBtn').addEventListener('click', function() {
+        // Add your login functionality here
+        // document.getElementById('addRecordModal').classList.add('hidden');
+    });
+</script>
 
 </html>

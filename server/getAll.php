@@ -12,12 +12,16 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 if ($requestMethod == "GET") {
 
     if (isset($_GET['id'])) {
-        $customer = getCustomer($_GET);
-        echo $customer;
+        // $customer = getCustomer($_GET);
+        // echo $customer;
+        $article = getArticle($_GET);
+        echo $article;
 
     } else {
-        $customerList = getCustomerList();
-        echo $customerList;
+        $articleList = getArticles();
+        echo $articleList;
+        // $customerList = getCustomerList();
+        // echo $customerList;
     }
 
 } else {

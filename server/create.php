@@ -15,12 +15,15 @@ include "functions.php";
 
         if (empty($inputData)) {
             // when sending via form
-            $soreCustomer = storeCustomer($_POST);
+            // $storeCustomer = storeCustomer($_POST);
+            $storeArticle = storeArticle($_POST);
         } else {
             // when sending via AJAX/ raw whatever
-            $soreCustomer = storeCustomer($inputData);
+            // $storeCustomer = storeCustomer($inputData);
+            $storeArticle = storeArticle($inputData);
         }
-        echo $soreCustomer;
+        // echo $storeCustomer;
+        echo $storeArticle;
 
     } else {
         $data = [

@@ -56,6 +56,7 @@ function getCustomerList() {
 
     global $conn;
 
+    // $query = "SELECT * FROM customers";
     $query = "SELECT * FROM customers";
     $query_run = mysqli_query($conn, $query);
 
@@ -212,5 +213,113 @@ function deleteRecord($recordParams) {
         return json_encode($data);
     }
 }
+
+// articles
+
+function storeArticle($params) {
+    global $conn;
+    $title = mysqli_real_escape_string($conn, $params['title']);
+    $content = mysqli_real_escape_string($conn, $params['content']);
+
+    if (empty(trim($title)) || empty((trim($content)))) {
+        error422('Title and Content are required');
+    } else {
+        $query = "INSERT INTO articles (title, content) values ('$title', '$content')";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            $data = [
+                'status' => 201,
+                'message' => 'Record created successfully'
+            ];
+            header("HTTP/1.1 201 Record created successfully");
+            return json_encode($data);
+        } else {
+            $data = [
+                'status' => 500,
+                'message' => 'Internal Server Error'
+            ];
+            header("HTTP/1.1 500 Internal Server Error");
+            return json_encode($data);
+        }
+    }
+}
+
+function getArticles() {
+    global $conn;
+    $query = "SELECT * FROM articles";
+    $query_run = mysqli_query($conn, $query);
+
+    if ($query_run) {
+        if (mysqli_num_rows($query_run) > 0) {
+            
+            $res = mysqli_fetch_all($query_run, MYSQLI_ASSOC);
+            $data = [
+                'status' => 200,
+                'message' => 'Records fethed successfully',
+                'data' => $res
+            ];
+            header("HTTP/1.1 200 OK");
+            return json_encode($data);
+
+        } else {
+            $data = [
+                'status' => 404,
+                'message' => 'No Record Found'
+            ];
+            header("HTTP/1.1 404 Not Found");
+            return json_encode($data);
+        }
+    } else {
+        $data = [
+            'status' => 500,
+            'message' => 'Internal Server Error'
+        ];
+        header("HTTP/1.1 500 Internal Server Error");
+        return json_encode($data);
+    }
+}
+
+function getArticle($params) {
+    global $conn;
+
+    if ($params['id'] == null) {
+        return error422('ID is required');
+    }
+
+    $customerId = mysqli_real_escape_string($conn, $params['id']);
+    $query = "SELECT * FROM articles WHERE id = '$customerId' LIMIT 1" ;
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        if (mysqli_num_rows($result) > 0) {
+            
+            $res = mysqli_fetch_assoc($result);
+            $data = [
+                'status' => 200,
+                'message' => 'Record fethed successfully',
+                'data' => $res
+            ];
+            header("HTTP/1.1 200 OK");
+            return json_encode($data);
+
+        } else {
+            $data = [
+                'status' => 404,
+                'message' => 'No Record Found'
+            ];
+            header("HTTP/1.1 404 Not Found");
+            return json_encode($data);
+        }
+    } else {
+        $data = [
+            'status' => 500,
+            'message' => 'Internal Server Error'
+        ];
+        header("HTTP/1.1 500 Internal Server Error");
+        return json_encode($data);
+    }
+}
+
+
 
 ?>
