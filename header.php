@@ -23,7 +23,6 @@
             <button id="loginButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Log In
             </button>
-            <a href="login.php" class="block px-4 py-4 text-white hover:bg-gray-700">log in</a>
             <!-- log in btn ends -->
             <button class="lg:hidden focus:outline-none" id="menu-toggle">
                 <span class="iconify" data-icon="mdi:menu" data-inline="false" data-width="24" data-height="24" data-color="white"></span>
@@ -49,38 +48,51 @@
     </nav>
 </header>
 
-<!-- Log In Modal -->
+<!-- Log In Modal & Register Modal -->
 <div id="loginModal" class="fixed inset-0 hidden w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-20">
-        <div class="bg-gray-700 p-8 rounded-md w-full max-w-md">
+    <div class="bg-gray-700 p-8 rounded-md w-full max-w-md">
+        <div id="loginContainer">
             <h2 class="text-2xl font-semibold mb-4">Log In</h2>
             <form action="server/login-logic.php" method="POST">
                 <div class="mb-4">
                     <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                    <input type="text" 
-                            id="login-email" 
-                            name="email"
-                            placeholder="Enter your email"
-                            type="email"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <input type="text" id="login-email" name="email" placeholder="Enter your email (login)" type="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div class="mb-4">
-                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                    <input id="password" 
-                            name="password"
-                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                            placeholder="Enter your password">
+                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                    <input id="password" placeholder="Enter your password (login)" name="password" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div class="flex items-center justify-between">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-                    type="submit" 
-                    name="loginBtn"
-                    id="loginModalButton">
-                    Log In
-                </button>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" name="loginBtn" id="loginModalButton">
+                        Log In
+                    </button>
                 </div>
             </form>
         </div>
+        <div id="registerContainer" class="hidden">
+            <h2 class="text-2xl font-semibold mb-4">Register</h2>
+            <form action="server/register-logic.php" method="POST">
+                <div class="mb-4">
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                    <input type="text" id="login-email" name="email" placeholder="Enter your email (register)" type="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                    <input id="password" placeholder="Enter your password (register)" name="password" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+                <div class="flex items-center justify-between">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" name="registerBtn" id="loginModalButton">
+                        Register
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="mb-4 mt-4">
+            <p id="registerToggle" class="text-indigo-400 hover:text-indigo-300 mt-4 inline-block cursor-pointer">Click here to Register</p>
+            <p id="loginToggle" class="text-indigo-400 hover:text-indigo-300 mt-4 inline-block cursor-pointer hidden">Click here to Log In</p>
+        </div>
     </div>
+</div>
 
 <script>
     document.getElementById('loginButton').addEventListener('click', function() {
@@ -96,5 +108,19 @@
     document.getElementById('loginModalButton').addEventListener('click', function() {
         // Add your login functionality here
         document.getElementById('loginModal').classList.add('hidden');
+    });
+
+    document.getElementById('registerToggle').addEventListener('click', function(event) {
+        document.getElementById('loginContainer').classList.add('hidden');
+        document.getElementById('loginToggle').classList.remove('hidden');
+        document.getElementById('registerToggle').classList.add('hidden');
+        document.getElementById('registerContainer').classList.remove('hidden');
+    });
+
+    document.getElementById('loginToggle').addEventListener('click', function(event) {
+        document.getElementById('loginContainer').classList.remove('hidden');
+        document.getElementById('loginToggle').classList.add('hidden');
+        document.getElementById('registerToggle').classList.remove('hidden');
+        document.getElementById('registerContainer').classList.add('hidden');
     });
 </script>

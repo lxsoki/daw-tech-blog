@@ -7,14 +7,13 @@ include "dbcon.php";
             $password = mysqli_real_escape_string($conn, $_POST['password']);
 
             $login_query = "SELECT * FROM users WHERE email = '$email' AND password = '$password' LIMIT 1";
-            $login_query_res = mysqli_query($conn, $login_query);
+            $login_query_result = mysqli_query($conn, $login_query);
 
-            if (mysqli_num_rows($login_query_res) > 0) {
-                $row = mysqli_fetch_array($login_query_res);
+            if (mysqli_num_rows($login_query_result) > 0) {
+                $row = mysqli_fetch_array($login_query_result);
                 $_SESSION['authenticated'] = true;
                 $_SESSION['auth_user'] = [
-                    'name' => $row['name'],
-                    'email' => $row['email'],
+                    'email' => $row['email']
                 ];
                 $_SESSION['status'] = "You are now logged in!";
                 header("Location: ../user-page.php");
