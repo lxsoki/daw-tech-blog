@@ -12,12 +12,13 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 if ($requestMethod == "GET") {
 
     if (isset($_GET['id'])) {
-        $article = getArticle($_GET);
-        echo $article;
+        // var_dump($_GET['id']);
+        $articles = getArticlesByUserId($_GET);
+        echo $articles;
 
     } else {
-        $articleList = getArticles();
-        echo $articleList;
+        // $articleList = getArticles();
+        // echo $articleList;
     }
 
 } else {

@@ -20,9 +20,11 @@
                 $registerQueryResult = mysqli_query($conn, $registerQuery);
 
                 if ($registerQueryResult) {
+                    $row = mysqli_fetch_array($registerQueryResult);
                     $_SESSION['authenticated'] = true;
                     $_SESSION['auth_user'] = [
                         'email' => $email,
+                        'id' => $row['id']
                     ];
                     $_SESSION['status'] = "You are now registered!";
                     header("Location: ../user-page.php");

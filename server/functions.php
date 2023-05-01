@@ -286,8 +286,8 @@ function getArticle($params) {
         return error422('ID is required');
     }
 
-    $customerId = mysqli_real_escape_string($conn, $params['id']);
-    $query = "SELECT * FROM articles WHERE id = '$customerId' LIMIT 1" ;
+    $articleId = mysqli_real_escape_string($conn, $params['id']);
+    $query = "SELECT * FROM articles WHERE id = '$articleId' LIMIT 1" ;
     $result = mysqli_query($conn, $query);
 
     if ($result) {
@@ -302,6 +302,44 @@ function getArticle($params) {
             header("HTTP/1.1 200 OK");
             return json_encode($data);
 
+        } else {
+            $data = [
+                'status' => 404,
+                'message' => 'No Record Found'
+            ];
+            header("HTTP/1.1 404 Not Found");
+            return json_encode($data);
+        }
+    } else {
+        $data = [
+            'status' => 500,
+            'message' => 'Internal Server Error'
+        ];
+        header("HTTP/1.1 500 Internal Server Error");
+        return json_encode($data);
+    }
+}
+
+function getArticlesByUserId($params) {
+    global $conn;
+    if ($params['id'] == null) {
+        return error422('ID is required');
+    }
+    $userId = mysqli_real_escape_string($conn, $params['id']);
+    $query = "SELECT * FROM articles WHERE userId = '$userId'";
+    $queryResult = mysqli_query($conn, $query);
+
+    if ($queryResult) {
+        if (mysqli_num_rows($queryResult) > 0) {
+            // $res = mysqli_fetch_assoc($queryResult);
+            $res = mysqli_fetch_all($queryResult, MYSQLI_ASSOC);
+            $data = [
+                'status' => 200,
+                'messages' => 'Records fetched successfully',
+                'data' => $res
+            ];
+            header("HTTP/1.1 200 OK");
+            return json_encode($data);
         } else {
             $data = [
                 'status' => 404,

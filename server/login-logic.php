@@ -13,7 +13,8 @@ include "dbcon.php";
                 $row = mysqli_fetch_array($login_query_result);
                 $_SESSION['authenticated'] = true;
                 $_SESSION['auth_user'] = [
-                    'email' => $row['email']
+                    'email' => $row['email'],
+                    'id' => $row['id']
                 ];
                 $_SESSION['status'] = "You are now logged in!";
                 header("Location: ../user-page.php");
