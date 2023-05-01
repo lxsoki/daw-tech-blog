@@ -246,7 +246,7 @@ function storeArticle($params) {
 
 function getArticles() {
     global $conn;
-    $query = "SELECT * FROM articles";
+    $query = "SELECT articles.title, articles.content, articles.created_at ,users.username FROM articles LEFT JOIN `users` ON articles.userId = users.id ORDER BY articles.created_at DESC;";
     $query_run = mysqli_query($conn, $query);
 
     if ($query_run) {

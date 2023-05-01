@@ -7,6 +7,7 @@ document.getElementById("menu-toggle").addEventListener("click", () => {
 
 document.onreadystatechange = () => {
   if (document.readyState === "complete") {
+    // init app code after page has finished loading
       console.log('page loaded');
       getAllRecords();
   }
@@ -16,22 +17,28 @@ function addArticleToDom(article) {
   const nArt = document.createElement("article");
   const articleWrapper = document.createElement("div");
   const articleContentWrapper = document.createElement("div");
-  const articleH2 = document.createElement("h2");
-  const articleP1 = document.createElement("p");
-  const articleP2 = document.createElement("p");
-  articleH2.classList.add("text-xl", "font-bold", "mb-4");
+  const articleTitle = document.createElement("h2");
+  const articleContent = document.createElement("p");
+  const articleAuthor = document.createElement("p");
+  const articleCreatedAt = document.createElement("p");
+  articleTitle.classList.add("text-xl", "font-bold", "mb-4");
+  articleCreatedAt.classList.add("text-sm", "text-gray-400", "mb-2");
+  articleContent.classList.add("text-gray-300", "mt-2");
+  articleAuthor.classList.add("text-sm", "text-indigo-400", "mb-2", "mt-2");
   articleContentWrapper.classList.add("w-full", "md:w-2/3");
   articleWrapper.classList.add("flex", "flex-col", "md:flex-row", "items-center");
   nArt.classList.add("rounded-md", "shadow-md", "bg-gray-800", "p-6", "article-added");
   articlesMainPage.appendChild(nArt);
   nArt.appendChild(articleWrapper);
   articleWrapper.appendChild(articleContentWrapper);
-  articleContentWrapper.appendChild(articleH2);
-  articleContentWrapper.appendChild(articleP1);
-  articleContentWrapper.appendChild(articleP2);
-  articleH2.innerText = article.title;
-  articleP1.innerText = article.content;
-  articleP2.innerText = 'placeholder text';
+  articleContentWrapper.appendChild(articleTitle);
+  articleContentWrapper.appendChild(articleCreatedAt);
+  articleContentWrapper.appendChild(articleContent);
+  articleContentWrapper.appendChild(articleAuthor);
+  articleTitle.innerText = article.title;
+  articleCreatedAt.innerText = `Created on ${article.created_at}`;
+  articleContent.innerText = article.content;
+  articleAuthor.innerText = `Author: ${article.username}`;
 }
 
 
@@ -44,7 +51,6 @@ async function getAllRecords() {
   const reqData = await response.json();
   console.log(reqData);
   reqData.data.forEach((record) => {
-    // console.log(record);
     addArticleToDom(record);
   });
 }
