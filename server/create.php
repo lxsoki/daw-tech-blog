@@ -1,4 +1,5 @@
 <?php 
+session_start();
 error_reporting(0);
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json;");
@@ -6,7 +7,7 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 include "functions.php";
-
+    $currentUserId = $_SESSION['auth_user']['id'];
     $requestMethod = $_SERVER["REQUEST_METHOD"];
 
     if ($requestMethod == "POST") {
@@ -15,14 +16,11 @@ include "functions.php";
 
         if (empty($inputData)) {
             // when sending via form
-            // $storeCustomer = storeCustomer($_POST);
-            $storeArticle = storeArticle($_POST);
+            $storeArticle = storeArticle($_POST, $currentUserId);
         } else {
             // when sending via AJAX/ raw whatever
-            // $storeCustomer = storeCustomer($inputData);
-            $storeArticle = storeArticle($inputData);
+            $storeArticle = storeArticle($inputData, $currentUserId);
         }
-        // echo $storeCustomer;
         echo $storeArticle;
 
     } else {
