@@ -115,9 +115,9 @@
 
 <!-- Add new Record Modal -->
 <div id="addRecordModal" class="fixed inset-0 hidden w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-20">
-        <div class="bg-gray-700 p-8 rounded-md w-full max-w-md">
+        <div class="bg-gray-700 p-8 rounded-md w-full max-w-5xl h-[500px]">
             <h2 class="text-2xl font-semibold mb-4">Add a new article</h2>
-            <form>
+            <form class="flex flex-col h-[390px] justify-evenly">
                 <div class="mb-4">
                     <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
                     <input type="text" id="modal-title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -125,7 +125,7 @@
                 <div class="mb-4">
                 <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
                     <textarea id="modal-message" 
-                            rows="4" 
+                            rows="7" 
                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                             placeholder="Write your thoughts here...">
                     </textarea>
@@ -175,9 +175,15 @@
     }
 
     // add new record functionality
-    document.getElementById('addRecordBtn').addEventListener('click', function() {
-        document.getElementById('addRecordModal').classList.remove('hidden');
-    });
+    const addRecordBtn = document.getElementById('addRecordBtn');
+    if (addRecordBtn) {
+        addRecordBtn.addEventListener('click', function() {
+            document.getElementById('addRecordModal').classList.remove('hidden');
+        });
+    }
+    // document.getElementById('addRecordBtn').addEventListener('click', function() {
+    //     document.getElementById('addRecordModal').classList.remove('hidden');
+    // });
 
     document.getElementById('addRecordModal').addEventListener('click', function(event) {
         if (event.target === event.currentTarget) {
