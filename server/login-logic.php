@@ -2,9 +2,10 @@
 session_start();
 include "dbcon.php";
     if (isset($_POST['loginBtn'])) {
-        if (!empty(trim($_POST['email'])) && !empty(trim($_POST['password']))) {
+        if (!empty(trim($_POST['email'])) && !empty(trim($_POST['password'])) && !empty(trim($_POST['password']))) {
             $email = mysqli_real_escape_string($conn, $_POST['email']);
             $password = mysqli_real_escape_string($conn, $_POST['password']);
+            $username = mysqli_real_escape_string($conn, $_POST['username']);
 
             $login_query = "SELECT * FROM users WHERE email = '$email' AND password = '$password' LIMIT 1";
             $login_query_result = mysqli_query($conn, $login_query);
@@ -14,7 +15,8 @@ include "dbcon.php";
                 $_SESSION['authenticated'] = true;
                 $_SESSION['auth_user'] = [
                     'email' => $row['email'],
-                    'id' => $row['id']
+                    'id' => $row['id'],
+                    'username' => $row['username'],
                 ];
                 $_SESSION['status'] = "You are now logged in!";
                 header("Location: ../user-page.php");

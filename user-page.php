@@ -21,8 +21,9 @@ include('server/authentication.php');
             <article id="ignore-this" class="rounded-md shadow-md bg-gray-800 p-6">
                 <div>user page works? :D</div>
 
-                <h5>username: <?= $_SESSION['auth_user']['email'] ?></h5>
-                <h5>id: <?= $_SESSION['auth_user']['id'] ?></h5>
+                <h5>user email: <?= $_SESSION['auth_user']['email'] ?></h5>
+                <h5>user id: <?= $_SESSION['auth_user']['id'] ?></h5>
+                <h5>user name: <?= $_SESSION['auth_user']['username'] ?></h5>
             </article>
         </div>
     </main>
