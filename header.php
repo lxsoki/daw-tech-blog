@@ -20,9 +20,17 @@
                 </div>
             </div>
             <!-- log in btn -->
+            <?php if(!isset($_SESSION['authenticated'])) :?>
             <button id="loginButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Log In
             </button>
+            <?php endif ?>
+
+            <?php if(isset($_SESSION['authenticated'])) :?>
+            <button id="loginButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick=logout()>
+                Log Out
+            </button>
+            <?php endif ?>
             <!-- log in btn ends -->
             <button class="lg:hidden focus:outline-none" id="menu-toggle">
                 <span class="iconify" data-icon="mdi:menu" data-inline="false" data-width="24" data-height="24" data-color="white"></span>
@@ -106,7 +114,6 @@
     });
 
     document.getElementById('loginModalButton').addEventListener('click', function() {
-        // Add your login functionality here
         document.getElementById('loginModal').classList.add('hidden');
     });
 
@@ -123,4 +130,8 @@
         document.getElementById('registerToggle').classList.remove('hidden');
         document.getElementById('registerContainer').classList.add('hidden');
     });
+
+    function logout() {
+        window.location.href = "server/logout-logic.php";
+    }
 </script>
