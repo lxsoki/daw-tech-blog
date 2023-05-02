@@ -6,10 +6,10 @@ Initially started as tech news aggregator blog (based on content from macrumors 
 ## Main features:
 
 ### REST API
--[x] GET
--[x] POST
--[] PUT (endpoint is implemented but not added to any ui elements yet)
--[] DELETE (endpoint is implemented but not added to any ui elements yet)
+- [x] GET
+- [x] POST
+- [] PUT (endpoint is implemented but not added to any ui elements yet)
+- [] DELETE (endpoint is implemented but not added to any ui elements yet)
 
 ### Database
 - [x] MySQL
