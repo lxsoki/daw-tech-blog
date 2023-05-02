@@ -1,5 +1,5 @@
-<?php 
-    session_start();
+<?php
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,18 +14,18 @@
 </head>
 
 <body class="bg-gray-900 text-white flex flex-col min-h-screen">
-  <?php include 'header.php'; ?>
+  <?php include 'header.php';?>
 
   <main class="container mx-auto px-6 py-8 flex-grow">
-    <?php include 'carousel.php'; ?>
+    <?php include 'carousel.php';?>
     <!-- articles container -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="mainContainer">
       <p>ceau :)</p>
-      <p>Hi!☺</p>
+      <p>Hi! ☺</p>
       <!-- <article id="ignore-this" class="rounded-md shadow-md bg-gray-800 p-6">
-                <button class="rounded-md p-2 bg-slate-400" 
+                <button class="rounded-md p-2 bg-slate-400"
                 onclick="getAllRecords()">get all records</button>
-                <button class="rounded-md p-2 bg-slate-400" id="addRecordBtn" 
+                <button class="rounded-md p-2 bg-slate-400" id="addRecordBtn"
                 onclick="addRecord()">add record</button>
             </article> -->
 
@@ -117,7 +117,7 @@
     <!-- articles container end -->
   </main>
 
-  <?php include 'footer.php'; ?>
+  <?php include 'footer.php';?>
 
   <!-- js land -->
   <script src="index.js"></script>
