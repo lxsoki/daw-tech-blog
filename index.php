@@ -5,30 +5,31 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apple News Aggregator</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
-    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apple News Aggregator</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="bg-gray-900 text-white flex flex-col min-h-screen">
-    <?php include 'header.php'; ?>
+  <?php include 'header.php'; ?>
 
-    <main class="container mx-auto px-6 py-8 flex-grow">
-        <?php include 'carousel.php'; ?>
-        <!-- articles container -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="mainContainer">
-            <p>ceau :)</p>
-            <!-- <article id="ignore-this" class="rounded-md shadow-md bg-gray-800 p-6">
+  <main class="container mx-auto px-6 py-8 flex-grow">
+    <?php include 'carousel.php'; ?>
+    <!-- articles container -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="mainContainer">
+      <p>ceau :)</p>
+      <p>Hi!☺</p>
+      <!-- <article id="ignore-this" class="rounded-md shadow-md bg-gray-800 p-6">
                 <button class="rounded-md p-2 bg-slate-400" 
                 onclick="getAllRecords()">get all records</button>
                 <button class="rounded-md p-2 bg-slate-400" id="addRecordBtn" 
                 onclick="addRecord()">add record</button>
             </article> -->
 
-            <!-- <article class="rounded-md shadow-md bg-gray-800 p-6">
+      <!-- <article class="rounded-md shadow-md bg-gray-800 p-6">
                 <div class="flex flex-col md:flex-row items-center">
                     <div class="w-full md:w-2/3">
                         <h2 class="text-xl font-bold mb-4">Apple Announces Apple Music Classical, Now Available on the App Store</h2>
@@ -112,18 +113,18 @@
                 </div>
             </article> -->
 
-        </div>
-        <!-- articles container end -->
-    </main>
+    </div>
+    <!-- articles container end -->
+  </main>
 
-    <?php include 'footer.php'; ?>
+  <?php include 'footer.php'; ?>
 
-    <!-- js land -->
-    <script src="index.js"></script>
-    <script src="carousel.js"></script>
+  <!-- js land -->
+  <script src="index.js"></script>
+  <script src="carousel.js"></script>
 </body>
 <script>
-    
+
 </script>
 
 </html>
