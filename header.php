@@ -1,7 +1,8 @@
 <header class="bg-gray-800 shadow-md sticky">
     <nav class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
-            <a href="index.php" class="text-2xl font-semibold text-white">Latest News <span class="text-xs">from <span class="text-base italic">frontpagetech</span> & <span class="text-base italic">macrumors</span> </span></a>
+            <!-- <a href="index.php" class="text-2xl font-semibold text-white">Latest News <span class="text-xs">from <span class="text-base italic">frontpagetech</span> & <span class="text-base italic">macrumors</span> </span></a> -->
+            <a href="index.php" class="text-2xl font-semibold text-white">Share your thoughts </a>
             <div class="hidden lg:flex" id="nav-items">
                 <a href="index.php" class="mx-4 text-white hover:text-gray-300">Home</a>
                 <div class="relative dropdown inline-block">
@@ -20,6 +21,7 @@
                 </div>
             </div>
             <!-- log in btn -->
+            <div class="flex justify-between w-[220px]">
             <?php if (!isset($_SESSION['authenticated'])) : ?>
                 <button id="loginButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Log In
@@ -34,6 +36,7 @@
                     Log Out
                 </button>
             <?php endif ?>
+            </div>
             <!-- log in btn ends -->
             <button class="lg:hidden focus:outline-none" id="menu-toggle">
                 <span class="iconify" data-icon="mdi:menu" data-inline="false" data-width="24" data-height="24" data-color="white"></span>

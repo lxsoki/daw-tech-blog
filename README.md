@@ -1,10 +1,13 @@
 # daw-tech-blog
 
-College project which revolves around creating a personal website using HTML, CSS, JS and PHP.
-Other technologies used: TailwindCSS.
+College project designed to showcase the use of the following technologies web: HTML, CSS, JS, PHP.
+Initially started as tech news aggregator blog (based on content from macrumors and frontpagetech) but now pivoted to something else.
 
-This project is purely designed to showcase the ability to implement various functions using the technologies listed above. The posts are used instead of the plain lorem ipsum. Nothing more, nothing less.
+Main features:
 
-The website resembles a tech news aggregator (currently focused on Apple news) with posts which I've taken from the following websites: frontpagetech.com and macrumors.com.
+Working REST API (GET, POST, PUT, DELETE)
+Layouting done with TailwindCSS
+Database: MySQL
+App content generated dinamicly from database using the fetch API
 
 

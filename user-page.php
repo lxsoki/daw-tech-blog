@@ -17,10 +17,9 @@ include('server/authentication.php');
 <body class="bg-gray-900 text-white flex flex-col min-h-screen">
     <?php include 'header.php'; ?>
     <main class="container mx-auto px-6 py-8 flex-grow">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="userPageContainer">
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-8" id="userPageContainer">
             <article id="ignore-this" class="rounded-md shadow-md bg-gray-800 p-6">
                 <div>user page works? :D</div>
-
                 <h5>user email: <?= $_SESSION['auth_user']['email'] ?></h5>
                 <h5>user id: <?= $_SESSION['auth_user']['id'] ?></h5>
                 <h5>user name: <?= $_SESSION['auth_user']['username'] ?></h5>
@@ -62,7 +61,7 @@ include('server/authentication.php');
             addArticleToDom(article);
         });
     }
-    // check if page loaded
+    // check if the page has loaded
     document.onreadystatechange = () => {
         if (document.readyState === "complete") {
             console.log('page loaded');
