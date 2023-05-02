@@ -6,6 +6,7 @@
             $email = mysqli_real_escape_string($conn, $_POST['email']);
             $password = mysqli_real_escape_string($conn, $_POST['password']);
             $username = mysqli_real_escape_string($conn, $_POST['username']);
+            $encryptedPassword = md5($password);
 
             // check if email already exists
             $checkEmailQuery = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
@@ -17,7 +18,7 @@
                 exit(0);
             } else {
                 // register the new user
-                $registerQuery = "INSERT INTO users (email, password, username) VALUES ('$email', '$password', '$username')";
+                $registerQuery = "INSERT INTO users (email, password, username) VALUES ('$email', '$encryptedPassword', '$username')";
                 $registerQueryResult = mysqli_query($conn, $registerQuery);
 
                 if ($registerQueryResult) {
