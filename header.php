@@ -51,7 +51,7 @@
         </div>
         <div class="flex flex-col hidden lg:hidden mt-4 space-y-2" id="mobile-nav">
             <a href="#" class="mx-4 text-white hover:text-gray-300">Home</a>
-            <div class="relative dropdown">
+            <!-- <div class="relative dropdown">
                 <a href="#" class="mx-4 text-white hover:text-gray-300 py-2">Products</a>
                 <div class="dropdown-menu absolute left-12 -mt-8 w-32 bg-gray-800 rounded-md shadow-lg hidden z-10">
                     <a href="cat-page1.php" class="block px-4 py-2 text-white hover:bg-gray-700">iPhone</a>
@@ -64,7 +64,12 @@
                     <a href="cat-page3.php" class="block px-4 py-2 text-white hover:bg-gray-700">Apple Music</a>
                     <a href="cat-page4.php" class="block px-4 py-2 text-white hover:bg-gray-700">macOS</a>
                 </div>
-            </div>
+            </div> -->
+            <?php if (isset($_SESSION['authenticated'])) : ?>
+                    <div class="relative inline-block">
+                        <a href="user-page.php" class="mx-4 text-white hover:text-gray-300 py-2">My Posts</a>
+                    </div>
+                <?php endif ?>
         </div>
     </nav>
 </header>
