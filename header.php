@@ -1,11 +1,12 @@
 <header class="bg-gray-800 shadow-md sticky">
+    <!-- <header class="bg-gradient-to-l from-gray-700 shadow-md sticky"> -->
     <nav class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
             <!-- <a href="index.php" class="text-2xl font-semibold text-white">Latest News <span class="text-xs">from <span class="text-base italic">frontpagetech</span> & <span class="text-base italic">macrumors</span> </span></a> -->
             <a href="index.php" class="text-2xl font-semibold text-white">Share your thoughts </a>
             <div class="hidden lg:flex" id="nav-items">
                 <a href="index.php" class="mx-4 text-white hover:text-gray-300">Home</a>
-                <div class="relative dropdown inline-block">
+                <!-- <div class="relative dropdown inline-block">
                     <a href="#" class="mx-4 text-white hover:text-gray-300 py-2">Products</a>
                     <div class="dropdown-menu absolute left-0 mt-1 w-32 bg-gray-800 rounded-md shadow-lg hidden z-10">
                         <a href="cat-page1.php" class="block px-4 py-4 text-white hover:bg-gray-700">iPhone</a>
@@ -18,24 +19,30 @@
                         <a href="cat-page3.php" class="block px-4 py-4 text-white hover:bg-gray-700">Apple Music</a>
                         <a href="cat-page4.php" class="block px-4 py-4 text-white hover:bg-gray-700">macOS</a>
                     </div>
-                </div>
+                </div> -->
+                <?php if (isset($_SESSION['authenticated'])) : ?>
+                    <div class="relative inline-block">
+                        <a href="user-page.php" class="mx-4 text-white hover:text-gray-300 py-2">My Posts</a>
+                    </div>
+                <?php endif ?>
             </div>
             <!-- log in btn -->
             <div class="flex justify-between w-[220px]">
-            <?php if (!isset($_SESSION['authenticated'])) : ?>
-                <button id="loginButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Log In
-                </button>
-            <?php endif ?>
+                <?php if (!isset($_SESSION['authenticated'])) : ?>
+                    <button id="loginButton" class="bg-gradient-to-r from-gray-700 to-slate-500 text-white font-bold py-2 px-4 rounded">
+                        Log In
+                    </button>
+                <?php endif ?>
 
-            <?php if (isset($_SESSION['authenticated'])) : ?>
-                <button id="addRecordBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Add a Post
-                </button>
-                <button id="loginButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick=logout()>
-                    Log Out
-                </button>
-            <?php endif ?>
+                <?php if (isset($_SESSION['authenticated'])) : ?>
+                    <!-- <button id="addRecordBtn" class="bg-gray-700 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"> -->
+                    <button id="addRecordBtn" class="bg-gradient-to-r from-gray-700 to-slate-500 hover:from-violet-900 hover:to-violet-700 text-white font-bold py-2 px-4 rounded">
+                        Add a Post
+                    </button>
+                    <button id="loginButton" class="bg-gradient-to-r from-gray-700 to-slate-500 hover:from-slate-900 hover:to-slate-600 text-white font-bold py-2 px-4 rounded" onclick=logout()>
+                        Log Out
+                    </button>
+                <?php endif ?>
             </div>
             <!-- log in btn ends -->
             <button class="lg:hidden focus:outline-none" id="menu-toggle">
@@ -65,6 +72,7 @@
 <!-- Log In Modal & Register Modal -->
 <div id="loginModal" class="fixed inset-0 hidden w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-20">
     <div class="bg-gray-700 p-8 rounded-md w-full max-w-md">
+        <!-- login -->
         <div id="loginContainer">
             <h2 class="text-2xl font-semibold mb-4">Log In</h2>
             <form action="server/login-logic.php" method="POST">
@@ -87,12 +95,13 @@
                 </div>
             </form>
         </div>
+        <!-- registration -->
         <div id="registerContainer" class="hidden">
             <h2 class="text-2xl font-semibold mb-4">Register</h2>
             <form action="server/register-logic.php" method="POST">
                 <div class="mb-4">
                     <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                    <input type="text" id="register-username" name="name" placeholder="Enter your username (register)" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <input type="text" id="register-username" name="username" placeholder="Enter your username (register)" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div class="mb-4">
                     <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
@@ -118,32 +127,27 @@
 
 <!-- Add new Record Modal -->
 <div id="addRecordModal" class="fixed inset-0 hidden w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-20">
-        <div class="bg-gray-700 p-8 rounded-md w-full max-w-5xl h-[500px]">
-            <h2 class="text-2xl font-semibold mb-4">Add a new article</h2>
-            <form class="flex flex-col h-[390px] justify-evenly">
-                <div class="mb-4">
-                    <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                    <input type="text" id="modal-title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </div>
-                <div class="mb-4">
+    <div class="bg-gray-700 p-8 rounded-md w-full max-w-5xl h-[500px]">
+        <h2 class="text-2xl font-semibold mb-4">Add a new article</h2>
+        <form class="flex flex-col h-[390px] justify-evenly">
+            <div class="mb-4">
+                <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                <input type="text" id="modal-title" placeholder="Article title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+            <div class="mb-4">
                 <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
-                    <textarea id="modal-message" 
-                            rows="7" 
-                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                            placeholder="Write your thoughts here...">
+                <textarea id="modal-message" rows="7" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here...">
                     </textarea>
-                </div>
-                <div class="flex items-center justify-between">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-                            type="button" onclick="submitNewRecord()"
-                            id="submitRecordBtn">
-                        Submit
-                    </button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="flex items-center justify-between">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="submitNewRecord()" id="submitRecordBtn">
+                    Submit
+                </button>
+            </div>
+        </form>
     </div>
-
+</div>
+<!-- <script src="index.js"></script> -->
 <script>
     document.getElementById('loginButton').addEventListener('click', function() {
         document.getElementById('loginModal').classList.remove('hidden');
@@ -182,15 +186,115 @@
     if (addRecordBtn) {
         addRecordBtn.addEventListener('click', function() {
             document.getElementById('addRecordModal').classList.remove('hidden');
+            console.log('??')
+            document.getElementById("modal-title").value = "";
+            document.getElementById("modal-message").value = "";
         });
     }
-    // document.getElementById('addRecordBtn').addEventListener('click', function() {
-    //     document.getElementById('addRecordModal').classList.remove('hidden');
-    // });
 
     document.getElementById('addRecordModal').addEventListener('click', function(event) {
         if (event.target === event.currentTarget) {
             document.getElementById('addRecordModal').classList.add('hidden');
         }
     });
+
+    async function submitNewRecord() {
+        const title = document.getElementById("modal-title").value.trim();
+        const content = document.getElementById("modal-message").value.trim();
+        const modal = document.getElementById("addRecordModal");
+        const currentArticles = document.querySelectorAll(".article-added");
+        console.log(title, content);
+        const endpoint = "server/create.php";
+
+        fetch(endpoint, {
+            method: "POST",
+            Headers: {
+                Accept: 'application.json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: title,
+                content: content,
+            })
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            if (data.status === 201) {
+                console.log(data);
+                // check if we are on the user page
+                if (window.location.pathname.includes('user-page')) {
+                    currentArticles.forEach(article => article.remove());
+                    getArticlesForUser();
+                    modal.classList.add("hidden");
+                } else {
+                    currentArticles.forEach(article => article.remove());
+                    getAllRecords();
+                    modal.classList.add("hidden");
+                }
+                // currentArticles.forEach(article => article.remove());
+                // getAllRecords();
+                // modal.classList.add("hidden");
+            }
+        });
+    }
+
+    async function getArticlesForUser() {
+        const userId = '<?= $_SESSION['auth_user']['id'] ?>';
+        const endpoint = `server/getArticlesById.php?id=${userId}`;
+        const request = await fetch(endpoint, {
+            method: 'GET'
+        });
+        const response = await request.json();
+        if (response.status === 404) {
+            console.log('no articles found for this user')
+        } else {
+
+            console.log(response);
+            response.data.forEach((article) => {
+                addArticleToDom(article);
+            });
+        }
+    }
+
+    function addArticleToDom(article) {
+        const nArt = document.createElement("article");
+        const articleWrapper = document.createElement("div");
+        const articleContentWrapper = document.createElement("div");
+        const articleTitle = document.createElement("h2");
+        const articleContent = document.createElement("p");
+        const articleAuthor = document.createElement("p");
+        const articleCreatedAt = document.createElement("p");
+        articleTitle.classList.add("text-xl", "font-bold", "mb-4");
+        articleCreatedAt.classList.add("text-sm", "text-gray-400", "mb-2");
+        articleContent.classList.add("text-gray-300", "mt-2");
+        articleAuthor.classList.add("text-sm", "text-indigo-400", "mb-2", "mt-2");
+        articleContentWrapper.classList.add("w-full", "md:w-2/3");
+        articleWrapper.classList.add("flex", "flex-col", "md:flex-row", "items-center");
+        nArt.classList.add("rounded-md", "shadow-md", "bg-gradient-to-r", "from-gray-800", "hover:bg-slate-500", "p-6", "article-added"); // bg-gray-800 or color
+        articlesMainPage.appendChild(nArt);
+        nArt.appendChild(articleWrapper);
+        articleWrapper.appendChild(articleContentWrapper);
+        articleContentWrapper.appendChild(articleTitle);
+        articleContentWrapper.appendChild(articleCreatedAt);
+        articleContentWrapper.appendChild(articleContent);
+        articleContentWrapper.appendChild(articleAuthor);
+        articleTitle.innerText = article.title;
+        articleCreatedAt.innerText = `Created on ${article.created_at}`;
+        articleContent.innerText = article.content;
+        articleAuthor.innerText = `Author: ${article.username}`;
+    }
+
+
+    async function getAllRecords() {
+        console.log('clicked get all');
+        const endpoint = "server/getAll.php";
+        const response = await fetch(endpoint, {
+            method: "GET",
+        });
+        const reqData = await response.json();
+        console.log(reqData);
+        reqData.data.forEach((record) => {
+            addArticleToDom(record);
+        });
+    }
 </script>

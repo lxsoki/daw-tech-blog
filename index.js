@@ -1,14 +1,15 @@
-const articlesMainPage = document.getElementById("mainContainer");
-
 document.getElementById("menu-toggle").addEventListener("click", () => {
   const mobileNav = document.getElementById("mobile-nav");
   mobileNav.classList.toggle("hidden");
 });
 
+const articlesMainPage = document.getElementById("mainContainer");
+
 document.onreadystatechange = () => {
   if (document.readyState === "complete") {
     // init app code after page has finished loading
       console.log('page loaded');
+      
       getAllRecords();
   }
 }
@@ -27,7 +28,7 @@ function addArticleToDom(article) {
   articleAuthor.classList.add("text-sm", "text-indigo-400", "mb-2", "mt-2");
   articleContentWrapper.classList.add("w-full", "md:w-2/3");
   articleWrapper.classList.add("flex", "flex-col", "md:flex-row", "items-center");
-  nArt.classList.add("rounded-md", "shadow-md", "bg-gray-800", "p-6", "article-added");
+  nArt.classList.add("rounded-md", "shadow-md", "bg-gradient-to-r", "from-gray-800", "hover:bg-slate-500", "p-6", "article-added"); // bg-gray-800 or color
   articlesMainPage.appendChild(nArt);
   nArt.appendChild(articleWrapper);
   articleWrapper.appendChild(articleContentWrapper);
@@ -60,8 +61,8 @@ function addRecord() {
 }
 
 async function submitNewRecord() {
-  const title = document.getElementById("modal-title").value;
-  const content = document.getElementById("modal-message").value;
+  const title = document.getElementById("modal-title").value.trim();
+  const content = document.getElementById("modal-message").value.trim();
   const modal = document.getElementById("addRecordModal");
   const currentArticles = document.querySelectorAll(".article-added");
   console.log(title, content);

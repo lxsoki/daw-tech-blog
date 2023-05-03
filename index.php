@@ -20,6 +20,12 @@ session_start();
         <?php include 'carousel.php'; ?>
         <!-- articles container, content will pe generated dinamically via http calls & js -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="mainContainer">
+            <article id="ignore-this" class="rounded-md shadow-md  bg-gradient-to-r from-gray-700 p-6 hover:bg-slate-500">
+                    <div>user page works? :D</div>
+                    <p>1></p>
+                    <p>2></p>
+                    <p>3></p>
+            </article>
 
         </div>
         <!-- articles container end -->

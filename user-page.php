@@ -35,19 +35,23 @@ include('server/authentication.php');
         const nArt = document.createElement("article");
         const articleWrapper = document.createElement("div");
         const articleContentWrapper = document.createElement("div");
-        const articleH2 = document.createElement("h2");
-        const articleP1 = document.createElement("p");
-        articleH2.classList.add("text-xl", "font-bold", "mb-4");
+        const articleTitle = document.createElement("h2");
+        const articleContent = document.createElement("p");
+        const articleCreatedAt = document.createElement("p");
+        articleTitle.classList.add("text-xl", "font-bold", "mb-4");
+        articleCreatedAt.classList.add("text-sm", "text-gray-400", "mb-2");
         articleContentWrapper.classList.add("w-full", "md:w-2/3");
         articleWrapper.classList.add("flex", "flex-col", "md:flex-row", "items-center");
-        nArt.classList.add("rounded-md", "shadow-md", "bg-gray-800", "p-6", "article-added");
+        nArt.classList.add("rounded-md", "shadow-md", "bg-gradient-to-r", "from-gray-800", "hover:bg-slate-500", "p-6", "article-added"); // og color bg-gray-800
         mainContainer.appendChild(nArt);
         nArt.appendChild(articleWrapper);
         articleWrapper.appendChild(articleContentWrapper);
-        articleContentWrapper.appendChild(articleH2);
-        articleContentWrapper.appendChild(articleP1);
-        articleH2.innerText = article.title;
-        articleP1.innerText = article.content;
+        articleContentWrapper.appendChild(articleTitle);
+        articleContentWrapper.appendChild(articleCreatedAt);
+        articleContentWrapper.appendChild(articleContent);
+        articleTitle.innerText = article.title;
+        articleCreatedAt.innerText = `Created on ${article.created_at}`;
+        articleContent.innerText = article.content;
     }
 
     async function getArticlesForUser() {
@@ -57,9 +61,15 @@ include('server/authentication.php');
             method: 'GET'
         });
         const response = await request.json();
-        response.data.forEach((article) => {
-            addArticleToDom(article);
-        });
+        if (response.status === 404) {
+            console.log('no articles found for this user')
+        } else {
+
+            console.log(response);
+            response.data.forEach((article) => {
+                addArticleToDom(article);
+            });
+        }
     }
     // check if the page has loaded
     document.onreadystatechange = () => {
