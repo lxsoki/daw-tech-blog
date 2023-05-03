@@ -9,7 +9,7 @@ include('server/authentication.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apple News Aggregator</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
     <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -55,11 +55,13 @@ include('server/authentication.php');
     }
 
     async function getArticlesForUser() {
+        // user-page method
         const userId = '<?= $_SESSION['auth_user']['id'] ?>';
         const endpoint = `server/getArticlesById.php?id=${userId}`;
         const request = await fetch(endpoint, {
             method: 'GET'
         });
+        window.localStorage.setItem('userId', userId);
         const response = await request.json();
         if (response.status === 404) {
             console.log('no articles found for this user')

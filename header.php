@@ -152,7 +152,7 @@
         </form>
     </div>
 </div>
-<!-- <script src="index.js"></script> -->
+
 <script>
     document.getElementById('loginButton').addEventListener('click', function() {
         document.getElementById('loginModal').classList.remove('hidden');
@@ -183,6 +183,7 @@
     });
 
     function logout() {
+        window.localStorage.removeItem('userId');
         window.location.href = "server/logout-logic.php";
     }
 
@@ -244,7 +245,8 @@
     }
 
     async function getArticlesForUser() {
-        const userId = '<?= $_SESSION['auth_user']['id'] ?>';
+        // header method
+        const userId = window.localStorage.getItem('userId');
         const endpoint = `server/getArticlesById.php?id=${userId}`;
         const request = await fetch(endpoint, {
             method: 'GET'
@@ -302,4 +304,5 @@
             addArticleToDom(record);
         });
     }
+
 </script>

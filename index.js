@@ -8,9 +8,8 @@ const articlesMainPage = document.getElementById("mainContainer");
 document.onreadystatechange = () => {
   if (document.readyState === "complete") {
     // init app code after page has finished loading
-      console.log('page loaded');
-      
-      getAllRecords();
+    console.log('page loaded');
+    getAllRecords();
   }
 }
 
@@ -44,7 +43,6 @@ function addArticleToDom(article) {
 
 
 async function getAllRecords() {
-  console.log('clicked get all');
   const endpoint = "server/getAll.php";
   const response = await fetch(endpoint, {
     method: "GET",
@@ -57,7 +55,7 @@ async function getAllRecords() {
 }
 
 function addRecord() {
-  console.log('clicked add record');
+  // console.log('clicked add record');
 }
 
 async function submitNewRecord() {
