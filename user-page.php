@@ -47,7 +47,7 @@ include('server/authentication.php');
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5" type="button" onclick="submitEditedRecord()" id="submitEditRecordBtn">
                     Submit
                 </button>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="cancelEditedRecord()" id="submitEditRecordBtn">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="cancelEditedRecord()" id="cancelEditRecordBtn">
                     Cancel
                 </button>
             </div>
@@ -77,7 +77,7 @@ include('server/authentication.php');
         // article action btns
         articleActions.classList.add("flex", "flex-row", "justify-end", "items-center");
         articleEditBtn.classList.add("bg-gray-700", "hover:bg-gray-600", "text-white", "font-bold", "py-2", "px-4", "rounded");
-        articleDeleteBtn.classList.add("bg-red-700", "hover:bg-red-600", "text-white", "font-bold", "py-2", "px-4", "rounded", "ml-4");
+        articleDeleteBtn.classList.add("bg-red-600", "hover:bg-red-700", "text-white", "font-bold", "py-2", "px-4", "rounded", "ml-4");
         articleEditBtn.innerText = "Edit";
         articleDeleteBtn.innerText = "Delete";
 
