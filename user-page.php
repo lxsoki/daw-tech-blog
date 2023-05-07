@@ -32,7 +32,6 @@ include('server/authentication.php');
     const mainContainer = document.getElementById('userPageContainer');
 
     function addArticleToDom(article) {
-        console.log(article);
         const nArt = document.createElement("article");
         const articleWrapper = document.createElement("div");
         const articleContentWrapper = document.createElement("div");
@@ -75,21 +74,25 @@ include('server/authentication.php');
 
         articleDeleteBtn.addEventListener('click', async () => {
             console.log('delete article', article.id, article.userId, article.content, article.title);
-            const endpoint = `server/delete.php?id=${article.id}`;
-            const request = await fetch(endpoint, {
-                    method: 'DELETE'
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 200) {
-                        console.log('article deleted');
-                        // remove article from dom
-                        nArt.remove();
-                    } else {
-                        console.log('article not deleted');
-                    }
-                });
-
+            if (confirm('Are you sure you want to delete this article?')) {
+                console.log('yes delete');
+                const endpoint = `server/delete.php?id=${article.id}`;
+                const request = await fetch(endpoint, {
+                        method: 'DELETE'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 200) {
+                            console.log('article deleted');
+                            // remove article from dom
+                            nArt.remove();
+                        } else {
+                            console.log('article not deleted');
+                        }
+                    });
+            } else {
+                console.log('no delete');
+            }
         });
     }
 
