@@ -98,43 +98,39 @@ function deleteRecord($recordParams) {
 // articles
 
 // toDo BIIIIG refactor
-function updateArticle($customerInput, $customerParams) {
+function updateArticle($articleInput, $articleParams) {
     global $conn;
 
-    if (!isset($customerParams['id'])) {
+    if (!isset($articleParams['id'])) {
         return error422('ID is required in the url');
-    } elseif ($customerParams['id'] == null) {
+    } elseif ($articleParams['id'] == null) {
         return error422('ID is required, please provide it.');
     }
 
 
-    $id = mysqli_real_escape_string($conn, $customerParams['id']);
-
-    $name = mysqli_real_escape_string($conn, $customerInput['name']);
-    $email = mysqli_real_escape_string($conn, $customerInput['email']);
-    $phone = mysqli_real_escape_string($conn, $customerInput['phone']);
+    $id = mysqli_real_escape_string($conn, $articleParams['id']);
+    $userId = mysqli_real_escape_string($conn, $articleParams['userId']);
+    $title = mysqli_real_escape_string($conn, $articleInput['title']);
+    $content = mysqli_real_escape_string($conn, $articleInput['content']);
 
     // currently update method requires all the params
 
-    if (empty(trim($name))) {
-        return error422('Name is required');
+    if (empty(trim($title))) {
+        return error422('Title is required');
 
-    } elseif (empty(trim($email))) {
-        error422('Email is required');
-
-    } elseif (empty(trim($phone))) {
-        error422('Phone is required');
+    } elseif (empty(trim($content))) {
+        error422('Content is required');
     } else {
 
-        $query = "UPDATE customers SET name = '$name', email = '$email', phone = '$phone' WHERE id = '$id'";
+        $query = "UPDATE articles SET title = '$title', content = '$content' WHERE id = '$id'";
         $result = mysqli_query($conn, $query);
         
         if ($result) {
             $data = [
                 'status' => 200,
-                'message' => 'Record updated successfully'
+                'message' => 'Article updated successfully'
             ];
-            header("HTTP/1.1 200 Record updated successfully");
+            header("HTTP/1.1 200 Article updated successfully");
             return json_encode($data);
         } else {
             $data = [

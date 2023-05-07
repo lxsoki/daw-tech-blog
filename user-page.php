@@ -26,7 +26,34 @@ include('server/authentication.php');
             </article>
         </div>
     </main>
+    <?php include 'footer.php'; ?>
 </body>
+
+<!-- edit article modal -->
+<div id="editRecordModal" class="fixed inset-0 hidden w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-20">
+    <div class="bg-gray-700 p-8 rounded-md w-full max-w-5xl h-[500px]">
+        <h2 class="text-2xl font-semibold mb-4">Edit article</h2>
+        <form class="flex flex-col h-[390px] justify-evenly">
+            <div class="mb-4">
+                <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                <input type="text" id="e-modal-title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
+                <textarea id="e-modal-message" rows="7" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    </textarea>
+            </div>
+            <div class="flex items-center justify-end">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5" type="button" onclick="submitEditedRecord()" id="submitEditRecordBtn">
+                    Submit
+                </button>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="cancelEditedRecord()" id="submitEditRecordBtn">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 
 <script>
     const mainContainer = document.getElementById('userPageContainer');
@@ -70,6 +97,10 @@ include('server/authentication.php');
 
         articleEditBtn.addEventListener('click', () => {
             console.log('edit article', article.id, article.userId, article.content, article.title);
+            window.localStorage.setItem('editingArticle', JSON.stringify(article));
+            document.getElementById('editRecordModal').classList.remove('hidden');
+            document.getElementById('e-modal-title').value = article.title;
+            document.getElementById('e-modal-message').value = article.content;
         });
 
         articleDeleteBtn.addEventListener('click', async () => {
@@ -94,6 +125,41 @@ include('server/authentication.php');
                 console.log('no delete');
             }
         });
+    }
+
+
+    async function submitEditedRecord() {
+        const articleToEdit = JSON.parse(window.localStorage.getItem('editingArticle'));
+        console.log('submit edited record', articleToEdit);
+        // after everything is ok, remove the item from local storage
+        // window.localStorage.removeItem('editingArticle');
+        const currentArticles = document.querySelectorAll('.article-added');
+        const endpoint = `server/update.php?id=${articleToEdit.id}`;
+        const request = await fetch(endpoint, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    title: document.getElementById('e-modal-title').value,
+                    content: document.getElementById('e-modal-message').value,
+                })
+            }).then(response => response.json())
+            .then(data => {
+                if (data.status === 200) {
+                    console.log('article updated');
+                    currentArticles.forEach(article => article.remove());
+                    getArticlesForUser();
+                    document.getElementById('editRecordModal').classList.add('hidden');
+                    window.localStorage.removeItem('editingArticle');
+                } else {
+                    console.log('article not updated');
+                }
+            });
+    }
+
+    function cancelEditedRecord() {
+        document.getElementById('modal-title').value = '';
+        document.getElementById('modal-message').value = '';
+        document.getElementById('editRecordModal').classList.add('hidden');
+        window.localStorage.removeItem('editingArticle');
     }
 
 
