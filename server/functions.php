@@ -97,6 +97,86 @@ function deleteRecord($recordParams) {
 
 // articles
 
+// toDo BIIIIG refactor
+function updateArticle($customerInput, $customerParams) {
+    global $conn;
+
+    if (!isset($customerParams['id'])) {
+        return error422('ID is required in the url');
+    } elseif ($customerParams['id'] == null) {
+        return error422('ID is required, please provide it.');
+    }
+
+
+    $id = mysqli_real_escape_string($conn, $customerParams['id']);
+
+    $name = mysqli_real_escape_string($conn, $customerInput['name']);
+    $email = mysqli_real_escape_string($conn, $customerInput['email']);
+    $phone = mysqli_real_escape_string($conn, $customerInput['phone']);
+
+    // currently update method requires all the params
+
+    if (empty(trim($name))) {
+        return error422('Name is required');
+
+    } elseif (empty(trim($email))) {
+        error422('Email is required');
+
+    } elseif (empty(trim($phone))) {
+        error422('Phone is required');
+    } else {
+
+        $query = "UPDATE customers SET name = '$name', email = '$email', phone = '$phone' WHERE id = '$id'";
+        $result = mysqli_query($conn, $query);
+        
+        if ($result) {
+            $data = [
+                'status' => 200,
+                'message' => 'Record updated successfully'
+            ];
+            header("HTTP/1.1 200 Record updated successfully");
+            return json_encode($data);
+        } else {
+            $data = [
+                'status' => 500,
+                'message' => 'Internal Server Error'
+            ];
+            header("HTTP/1.1 500 Internal Server Error");
+            return json_encode($data);
+        }
+
+    }
+}
+
+function deleteArticle($params) {
+    global $conn;
+    if (!isset($params['id'])) {
+        return error422('ID is required in the url');
+    } elseif ($params['id'] == null) {
+        return error422('ID is required, please provide it.');
+    }
+
+    $id = mysqli_real_escape_string($conn, $params['id']);
+    $query = "DELETE FROM articles WHERE id = '$id' LIMIT 1";
+    $queryResult = mysqli_query($conn, $query);
+    
+    if ($queryResult) {
+        $data = [
+            'status' => 200,
+            'message' => 'Article deleted successfully.'
+        ];
+        header("HTTP/1.1 200 OK");
+        return json_encode($data);
+    } else {
+        $data = [
+            'status' => 404,
+            'message' => 'Article not found.'
+        ];
+        header("HTTP/1.1 404 Not Found");
+        return json_encode($data);
+    }
+}
+
 function storeArticle($params, $userId) {
     global $conn;
     $title = mysqli_real_escape_string($conn, $params['title']);
