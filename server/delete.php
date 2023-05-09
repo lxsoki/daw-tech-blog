@@ -11,7 +11,7 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 
 if ($requestMethod == "DELETE") {
 
-   $deletedRecord = deleteRecord($_GET);
+    $deletedRecord = deleteArticle($_GET);
     echo $deletedRecord;
 
 } else {

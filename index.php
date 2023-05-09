@@ -7,8 +7,8 @@ session_start();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apple News Aggregator</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <title>Share your thoughts :)</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
   <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -20,6 +20,7 @@ session_start();
     <?php include 'carousel.php';?>
     <!-- articles container -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="mainContainer">
+
       <!-- <article id="ignore-this" class="rounded-md shadow-md bg-gray-800 p-6">
                 <button class="rounded-md p-2 bg-slate-400"
                 onclick="getAllRecords()">get all records</button>
@@ -97,22 +98,8 @@ session_start();
                 </div>
             </article>
 
-            <article class="rounded-md shadow-md bg-gray-800 p-6">
-                <div class="flex flex-col md:flex-row items-center">
-                    <div class="w-full md:w-2/3">
-                        <h2 class="text-xl font-bold mb-4">A New Yellow iPhone 14 and iPhone 14 Plus Is Here!</h2>
-                        <p class="text-sm text-gray-400 mb-2">March 10, 2023</p>
-                        <p class="text-gray-300">If you’re wondering if there’s any other differences with the newly released yellow iPhone 14 and iPhone 14 Plus – nope! It’s just a very bright, piss colored option for people who really dig uhhhh bananas and the sun.</p>
-                        <a href="cat-page1.php#cat1-post2" class="text-indigo-400 hover:text-indigo-300 mt-4 inline-block">Read More</a>
-                    </div>
-                    <div class="w-full md:w-1/3 mt-4 md:mt-0 md:ml-6">
-                        <img src="assets/ip14-yellow-800x450.jpg" alt="iphon14-yellow-alt" class="w-full h-auto rounded-md">
-                    </div>
-                </div>
-            </article> -->
-
-    </div>
-    <!-- articles container end -->
+        </div>
+        <!-- articles container end -->
   </main>
 
   <?php include 'footer.php';?>

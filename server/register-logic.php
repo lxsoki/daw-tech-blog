@@ -2,7 +2,7 @@
     session_start();
     include "dbcon.php";
     if (isset($_POST['registerBtn'])) {
-        if (!empty(trim($_POST['email'])) && !empty(trim($_POST['password'])) && !empty(trim($_POST['password']))) {
+        if (!empty(trim($_POST['email'])) && !empty(trim($_POST['password'])) && !empty(trim($_POST['username']))) {
             $email = mysqli_real_escape_string($conn, $_POST['email']);
             $password = mysqli_real_escape_string($conn, $_POST['password']);
             $username = mysqli_real_escape_string($conn, $_POST['username']);
@@ -20,13 +20,15 @@
                 // register the new user
                 $registerQuery = "INSERT INTO users (email, password, username) VALUES ('$email', '$encryptedPassword', '$username')";
                 $registerQueryResult = mysqli_query($conn, $registerQuery);
-
+                var_dump($registerQueryResult);
                 if ($registerQueryResult) {
-                    $row = mysqli_fetch_array($registerQueryResult);
+                    // $row = mysqli_fetch_array($registerQueryResult);
+                    $rowId = mysqli_insert_id($conn);
+                    // var_dump($rowId);
                     $_SESSION['authenticated'] = true;
                     $_SESSION['auth_user'] = [
                         'email' => $email,
-                        'id' => $row['id'],
+                        'id' => $rowId,
                         'username' => $username,
                     ];
                     $_SESSION['status'] = "You are now registered!";

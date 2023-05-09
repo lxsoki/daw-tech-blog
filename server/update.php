@@ -15,10 +15,10 @@ include "functions.php";
 
         if (empty($inputData)) {
             // when sending via form
-            $updatedCustomer = updateCustomer($_POST, $_GET);
+            $updatedCustomer = updateArticle($_POST, $_GET);
         } else {
             // when sending via AJAX/ raw whatever
-            $updatedCustomer = updateCustomer($inputData, $_GET);
+            $updatedCustomer = updateArticle($inputData, $_GET);
         }
         echo $updatedCustomer;
 
