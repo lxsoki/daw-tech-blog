@@ -20,8 +20,6 @@ session_start();
     <?php include 'carousel.php';?>
     <!-- articles container -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="mainContainer">
-      <p>ceau :)</p>
-      <p>Hi! ☺</p>
       <!-- <article id="ignore-this" class="rounded-md shadow-md bg-gray-800 p-6">
                 <button class="rounded-md p-2 bg-slate-400"
                 onclick="getAllRecords()">get all records</button>
