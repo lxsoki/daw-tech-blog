@@ -34,6 +34,8 @@ session_start();
     <?php include 'footer.php'; ?>
 
     <!-- js land -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script> -->
+
     <script src="index.js"></script>
     <script src="carousel.js"></script>
 </body>

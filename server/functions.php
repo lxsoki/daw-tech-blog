@@ -325,7 +325,7 @@ function getArticleDetails($params) {
     
     $articleId = mysqli_real_escape_string($conn, $params['id']);
     // $query = "SELECT * FROM comments WHERE articleId = '$articleId'";
-    $query = "SELECT comments.commentId, comments.userId, comments.articleId, comments.comment, comments.created_at, users.username, articles.title FROM comments LEFT JOIN users ON users.id = comments.userId LEFT JOIN articles ON articles.id = comments.articleId WHERE articleId = '$articleId'";
+    $query = "SELECT comments.commentId, comments.userId, comments.articleId, comments.comment, comments.created_at, users.username, articles.title, articles.content, articles.created_at as article_created_at FROM comments LEFT JOIN users ON users.id = comments.userId LEFT JOIN articles ON articles.id = comments.articleId WHERE articleId = '$articleId'";
     $queryResult = mysqli_query($conn, $query);
 
     if ($queryResult) {
@@ -340,10 +340,11 @@ function getArticleDetails($params) {
             return json_encode($data);
         } else {
             $data = [
-                'status' => 404,
-                'message' => 'No Record Found'
+                'status' => 200,
+                'message' => 'No Record Found',
+                'data' => []
             ];
-            header("HTTP/1.1 404 Not Found");
+            header("HTTP/1.1 200 No Record Found");
             return json_encode($data);
         }
     } else {
