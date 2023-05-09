@@ -23,7 +23,7 @@ function addArticleToDom(article) {
   const articleCreatedAt = document.createElement("p");
   articleTitle.classList.add("text-xl", "font-bold", "mb-4");
   articleCreatedAt.classList.add("text-sm", "text-gray-400", "mb-2");
-  articleContent.classList.add("text-gray-300", "mt-2");
+  articleContent.classList.add("text-gray-300", "mt-2", "truncate");
   articleAuthor.classList.add("text-sm", "text-indigo-400", "mb-2", "mt-2");
   articleContentWrapper.classList.add("w-full", "md:w-2/3");
   articleWrapper.classList.add("flex", "flex-col", "md:flex-row", "items-center");
