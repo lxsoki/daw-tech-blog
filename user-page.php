@@ -70,6 +70,9 @@ include('server/authentication.php');
         const articleEditBtn = document.createElement("button");
         const articleDeleteBtn = document.createElement("button");
         const articleCommentsBtn = document.createElement("button");
+        const editBtnIcon = document.createElement("span");
+        const deleteBtnIcon = document.createElement("span");
+        const commentsBtnIcon = document.createElement("span");
         articleTitle.classList.add("text-xl", "font-bold", "mb-4");
         articleContent.classList.add("break-all")
         articleCreatedAt.classList.add("text-sm", "text-gray-400", "mb-2");
@@ -82,9 +85,10 @@ include('server/authentication.php');
         articleEditBtn.classList.add("bg-gray-700", "hover:bg-gray-600", "text-white", "font-bold", "py-2", "px-4", "rounded");
         articleDeleteBtn.classList.add("bg-red-600", "hover:bg-red-700", "text-white", "font-bold", "py-2", "px-4", "rounded", "ml-4");
         articleCommentsBtn.classList.add("bg-gray-700", "hover:bg-gray-600", "text-white", "font-bold", "py-2", "px-4", "rounded", "mr-4");
-        articleEditBtn.innerText = "Edit";
-        articleDeleteBtn.innerText = "Delete";
-        articleCommentsBtn.innerText = "Comments";
+        
+        // articleEditBtn.innerText = "Edit";
+        // articleDeleteBtn.innerText = "Delete";
+        // articleCommentsBtn.innerText = "Comments";
 
         // article comment click handler
         articleCommentsBtn.addEventListener('click', () => {
@@ -92,7 +96,16 @@ include('server/authentication.php');
             window.location.href = `article-page.php?id=${article.id}`;
         });
 
-
+        // add icons to btns
+        commentsBtnIcon.classList.add("iconify");
+        editBtnIcon.classList.add("iconify");
+        deleteBtnIcon.classList.add("iconify");
+        commentsBtnIcon.setAttribute("data-icon", "mdi:comments");
+        editBtnIcon.setAttribute("data-icon", "mdi:pencil");
+        deleteBtnIcon.setAttribute("data-icon", "mdi:delete");
+        articleCommentsBtn.appendChild(commentsBtnIcon);
+        articleEditBtn.appendChild(editBtnIcon);
+        articleDeleteBtn.appendChild(deleteBtnIcon);
 
         mainContainer.appendChild(nArt);
         nArt.appendChild(articleWrapper);
