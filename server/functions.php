@@ -316,6 +316,46 @@ function getArticlesByUserId($params) {
     }
 }
 
+function getArticleDetails($params) {
+    global $conn;
+
+    if ($params['id'] == null) {
+        return error422('Article ID is required');
+    }
+    
+    $articleId = mysqli_real_escape_string($conn, $params['id']);
+    // $query = "SELECT * FROM comments WHERE articleId = '$articleId'";
+    $query = "SELECT comments.commentId, comments.userId, comments.articleId, comments.comment, comments.created_at, users.username, articles.title FROM comments LEFT JOIN users ON users.id = comments.userId LEFT JOIN articles ON articles.id = comments.articleId WHERE articleId = '$articleId'";
+    $queryResult = mysqli_query($conn, $query);
+
+    if ($queryResult) {
+        if (mysqli_num_rows($queryResult) > 0) {
+            $res = mysqli_fetch_all($queryResult, MYSQLI_ASSOC);
+            $data = [
+                'status' => 200,
+                'messages' => 'Records fetched successfully',
+                'data' => $res
+            ];
+            header("HTTP/1.1 200 OK");
+            return json_encode($data);
+        } else {
+            $data = [
+                'status' => 404,
+                'message' => 'No Record Found'
+            ];
+            header("HTTP/1.1 404 Not Found");
+            return json_encode($data);
+        }
+    } else {
+        $data = [
+            'status' => 500,
+            'message' => 'Internal Server Error'
+        ];
+        header("HTTP/1.1 500 Internal Server Error");
+        return json_encode($data);
+    }
+}
+
 
 
 ?>
