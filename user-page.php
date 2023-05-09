@@ -24,6 +24,18 @@ include('server/authentication.php');
                 <h5>user id: <?= $_SESSION['auth_user']['id'] ?></h5>
                 <h5>user name: <?= $_SESSION['auth_user']['username'] ?></h5>
             </article>
+
+            <!-- test with textarea pre completed -->
+            <article id="test-lol" class="rounded-md shadow-md bg-gray-800 p-6">
+                <div class="w-full">
+                    <h2 class="text-xl font-bold mb-4">placeholder title</h2>
+                    <div>
+                        <!-- <textarea id="test1" disabled="true" rows="7" wrap="soft" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </textarea> -->
+                    </div>
+                </div>
+                
+            </article>
         </div>
     </main>
     <?php include 'footer.php'; ?>
@@ -69,13 +81,14 @@ include('server/authentication.php');
         const articleEditBtn = document.createElement("button");
         const articleDeleteBtn = document.createElement("button");
         articleTitle.classList.add("text-xl", "font-bold", "mb-4");
+        articleContent.classList.add("break-all")
         articleCreatedAt.classList.add("text-sm", "text-gray-400", "mb-2");
         articleContentWrapper.classList.add("w-full"); //md:w-2/3
         articleWrapper.classList.add("flex", "flex-col", "md:flex-row", "items-center");
         nArt.classList.add("rounded-md", "shadow-md", "bg-gradient-to-r", "from-gray-800", "hover:bg-slate-500", "p-6", "article-added"); // og color bg-gray-800
 
         // article action btns
-        articleActions.classList.add("flex", "flex-row", "justify-end", "items-center");
+        articleActions.classList.add("flex", "flex-row", "justify-end", "items-center", "mb-[15px]", "mt-[15px]");
         articleEditBtn.classList.add("bg-gray-700", "hover:bg-gray-600", "text-white", "font-bold", "py-2", "px-4", "rounded");
         articleDeleteBtn.classList.add("bg-red-600", "hover:bg-red-700", "text-white", "font-bold", "py-2", "px-4", "rounded", "ml-4");
         articleEditBtn.innerText = "Edit";

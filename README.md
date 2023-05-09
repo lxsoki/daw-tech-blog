@@ -8,7 +8,7 @@ Initially started as tech news aggregator blog (based on content from macrumors 
 ### REST API
 - [x] GET
 - [x] POST
-- [x] PUT (endpoint is implemented but not added to any ui elements yet)
+- [x] PUT
 - [x] DELETE 
 
 ### Database
