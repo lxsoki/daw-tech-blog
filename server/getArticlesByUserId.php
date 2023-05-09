@@ -29,3 +29,4 @@ if ($requestMethod == "GET") {
     header("HTTP/1.1 405 Method Not Allowed");
     echo json_encode($data);
 }
+// getArticlesById

@@ -25,17 +25,6 @@ include('server/authentication.php');
                 <h5>user name: <?= $_SESSION['auth_user']['username'] ?></h5>
             </article>
 
-            <!-- test with textarea pre completed -->
-            <article id="test-lol" class="rounded-md shadow-md bg-gray-800 p-6">
-                <div class="w-full">
-                    <h2 class="text-xl font-bold mb-4">placeholder title</h2>
-                    <div>
-                        <!-- <textarea id="test1" disabled="true" rows="7" wrap="soft" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        </textarea> -->
-                    </div>
-                </div>
-                
-            </article>
         </div>
     </main>
     <?php include 'footer.php'; ?>
@@ -80,6 +69,7 @@ include('server/authentication.php');
         const articleActions = document.createElement("div");
         const articleEditBtn = document.createElement("button");
         const articleDeleteBtn = document.createElement("button");
+        const articleCommentsBtn = document.createElement("button");
         articleTitle.classList.add("text-xl", "font-bold", "mb-4");
         articleContent.classList.add("break-all")
         articleCreatedAt.classList.add("text-sm", "text-gray-400", "mb-2");
@@ -91,8 +81,17 @@ include('server/authentication.php');
         articleActions.classList.add("flex", "flex-row", "justify-end", "items-center", "mb-[15px]", "mt-[15px]");
         articleEditBtn.classList.add("bg-gray-700", "hover:bg-gray-600", "text-white", "font-bold", "py-2", "px-4", "rounded");
         articleDeleteBtn.classList.add("bg-red-600", "hover:bg-red-700", "text-white", "font-bold", "py-2", "px-4", "rounded", "ml-4");
+        articleCommentsBtn.classList.add("bg-gray-700", "hover:bg-gray-600", "text-white", "font-bold", "py-2", "px-4", "rounded", "mr-4");
         articleEditBtn.innerText = "Edit";
         articleDeleteBtn.innerText = "Delete";
+        articleCommentsBtn.innerText = "Comments";
+
+        // article comment click handler
+        articleCommentsBtn.addEventListener('click', () => {
+            console.log('comments btn clicked');
+            window.location.href = `article-page.php?id=${article.id}`;
+        });
+
 
 
         mainContainer.appendChild(nArt);
@@ -102,6 +101,7 @@ include('server/authentication.php');
         articleContentWrapper.appendChild(articleCreatedAt);
         articleContentWrapper.appendChild(articleContent);
         articleContentWrapper.appendChild(articleActions);
+        articleActions.appendChild(articleCommentsBtn);
         articleActions.appendChild(articleEditBtn);
         articleActions.appendChild(articleDeleteBtn);
         articleTitle.innerText = article.title;
@@ -180,7 +180,7 @@ include('server/authentication.php');
     async function getArticlesForUser() {
         // user-page method
         const userId = '<?= $_SESSION['auth_user']['id'] ?>';
-        const endpoint = `server/getArticlesById.php?id=${userId}`;
+        const endpoint = `server/getArticlesByUserId.php?id=${userId}`;
         const request = await fetch(endpoint, {
             method: 'GET'
         });

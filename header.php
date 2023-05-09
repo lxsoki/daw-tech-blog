@@ -247,7 +247,7 @@
     async function getArticlesForUser() {
         // header method
         const userId = window.localStorage.getItem('userId');
-        const endpoint = `server/getArticlesById.php?id=${userId}`;
+        const endpoint = `server/getArticlesByUserId.php?id=${userId}`;
         const request = await fetch(endpoint, {
             method: 'GET'
         });
