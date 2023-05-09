@@ -94,7 +94,7 @@ include('server/authentication.php');
         articleCommentsBtn.addEventListener('click', () => {
             console.log('comments btn clicked');
             window.location.href = `article-page.php?id=${article.id}`;
-            window.localStorage.setItem('articleId', article.id);
+            window.localStorage.setItem('articleId', JSON.stringify(article));
         });
 
         // add icons to btns
@@ -213,7 +213,7 @@ include('server/authentication.php');
     // check if the page has loaded
     document.onreadystatechange = () => {
         if (document.readyState === "complete") {
-            console.log('page loaded');
+            console.log('user-page loaded');
             window.localStorage.removeItem('articleId');
             getArticlesForUser();
         }

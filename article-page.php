@@ -44,7 +44,7 @@ include('server/authentication.php');
         </div>
         <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
             <ul class="w-full divide-y divide-gray-200 dark:divide-gray-700" id="articleCommentsContainer">
-              <!-- li elements will be generated dynamically from the API results -->
+                <!-- li elements will be generated dynamically from the API results -->
             </ul>
         </div>
     </main>
@@ -70,8 +70,10 @@ include('server/authentication.php');
     }
 
     async function getArticleDetails() {
-
-        const endpoint = `server/getArticleDetails.php?id=${localStorage.getItem('articleId')}`;
+        const article = JSON.parse(localStorage.getItem('articleId'));
+        const articleId = article.id;
+        const endpoint = `server/getArticleDetails.php?id=${articleId}`;
+        appendArticleToDom(article);
         const request = await fetch(endpoint, {
             method: 'GET'
         });
@@ -79,18 +81,24 @@ include('server/authentication.php');
         console.log(response);
         if (response.data.length > 0) {
             console.log('comments found');
-            const articleData = {
-                title: response.data[0].title,
-                content: response.data[0].content,
-                created_at: response.data[0].article_created_at
-            };
-            appendArticleToDom(articleData);
             response.data.forEach((comment) => {
                 appendCommentsToDom(comment);
             });
         } else {
             console.log('no comments found :(');
+            appendNoCommentContainer();
         }
+    }
+
+    function appendNoCommentContainer() {
+        const noComments = document.createElement("div");
+        const noCommentsSubtitle = document.createElement("p");
+        noComments.classList.add("flex", "flex-col", "items-center", "justify-center", "text-gray-400", "text-xl", "font-semibold", "mt-5");
+        noCommentsSubtitle.classList.add("text-md", "text-gray-400", "mt-2");
+        noComments.innerText = "No comments found :( ";
+        noCommentsSubtitle.innerText = "Be the first to leave a comment!";
+        commentsContainer.appendChild(noComments);
+        noComments.appendChild(noCommentsSubtitle);
     }
 
     function appendArticleToDom(article) {
