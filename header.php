@@ -1,25 +1,10 @@
 <header class="bg-gray-800 shadow-md sticky">
-    <!-- <header class="bg-gradient-to-l from-gray-700 shadow-md sticky"> -->
     <nav class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
-            <!-- <a href="index.php" class="text-2xl font-semibold text-white">Latest News <span class="text-xs">from <span class="text-base italic">frontpagetech</span> & <span class="text-base italic">macrumors</span> </span></a> -->
+           
             <a href="index.php" class="text-2xl font-semibold text-white">Share your thoughts </a>
             <div class="hidden lg:flex" id="nav-items">
                 <a href="index.php" class="mx-4 text-white hover:text-gray-300">Home</a>
-                <!-- <div class="relative dropdown inline-block">
-                    <a href="#" class="mx-4 text-white hover:text-gray-300 py-2">Products</a>
-                    <div class="dropdown-menu absolute left-0 mt-1 w-32 bg-gray-800 rounded-md shadow-lg hidden z-10">
-                        <a href="cat-page1.php" class="block px-4 py-4 text-white hover:bg-gray-700">iPhone</a>
-                        <a href="cat-page2.php" class="block px-4 py-4 text-white hover:bg-gray-700">iPad</a>
-                    </div>
-                </div>
-                <div class="relative dropdown inline-block">
-                    <a href="#" class="mx-4 text-white hover:text-gray-300 py-2">Services</a>
-                    <div class="dropdown-menu absolute left-0 mt-0 w-32 bg-gray-800 rounded-md shadow-lg hidden z-10">
-                        <a href="cat-page3.php" class="block px-4 py-4 text-white hover:bg-gray-700">Apple Music</a>
-                        <a href="cat-page4.php" class="block px-4 py-4 text-white hover:bg-gray-700">macOS</a>
-                    </div>
-                </div> -->
                 <?php if (isset($_SESSION['authenticated'])) : ?>
                     <div class="relative inline-block">
                         <a href="user-page.php" class="mx-4 text-white hover:text-gray-300 py-2">My Posts</a>
@@ -35,7 +20,6 @@
                 <?php endif ?>
 
                 <?php if (isset($_SESSION['authenticated'])) : ?>
-                    <!-- <button id="addRecordBtn" class="bg-gray-700 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"> -->
                     <button id="addRecordBtn" class="bg-gradient-to-r from-gray-700 to-slate-500 hover:from-violet-900 hover:to-violet-700 text-white font-bold py-2 px-4 rounded">
                         Add a Post
                     </button>
@@ -50,21 +34,7 @@
             </button>
         </div>
         <div class="flex flex-col hidden lg:hidden mt-4 space-y-2" id="mobile-nav">
-            <a href="#" class="mx-4 text-white hover:text-gray-300">Home</a>
-            <!-- <div class="relative dropdown">
-                <a href="#" class="mx-4 text-white hover:text-gray-300 py-2">Products</a>
-                <div class="dropdown-menu absolute left-12 -mt-8 w-32 bg-gray-800 rounded-md shadow-lg hidden z-10">
-                    <a href="cat-page1.php" class="block px-4 py-2 text-white hover:bg-gray-700">iPhone</a>
-                    <a href="cat-page2.php" class="block px-4 py-2 text-white hover:bg-gray-700">iPad</a>
-                </div>
-            </div>
-            <div class="relative dropdown">
-                <a href="#" class="mx-4 text-white hover:text-gray-300 py-2">Services</a>
-                <div class="dropdown-menu absolute left-12 -mt-8 w-32 bg-gray-800 rounded-md shadow-lg hidden z-10">
-                    <a href="cat-page3.php" class="block px-4 py-2 text-white hover:bg-gray-700">Apple Music</a>
-                    <a href="cat-page4.php" class="block px-4 py-2 text-white hover:bg-gray-700">macOS</a>
-                </div>
-            </div> -->
+            <a href="index.php" class="mx-4 text-white hover:text-gray-300">Home</a>
             <?php if (isset($_SESSION['authenticated'])) : ?>
                     <div class="relative inline-block">
                         <a href="user-page.php" class="mx-4 text-white hover:text-gray-300 py-2">My Posts</a>
@@ -82,15 +52,15 @@
             <h2 class="text-2xl font-semibold mb-4">Log In</h2>
             <form action="server/login-logic.php" method="POST">
                 <div class="mb-4">
-                    <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                    <label for="login-username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
                     <input type="text" id="login-username" name="name" placeholder="Enter your username (login)" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div class="mb-4">
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                    <input type="text" id="login-email" name="email" placeholder="Enter your email (login)" type="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <label for="login-email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                    <input type="email" id="login-email" name="email" placeholder="Enter your email (login)" type="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div class="mb-4">
-                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                    <label for="login-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                     <input id="login-password" type="password" placeholder="Enter your password (login)" name="password" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div class="flex items-center justify-between">
@@ -105,15 +75,15 @@
             <h2 class="text-2xl font-semibold mb-4">Register</h2>
             <form action="server/register-logic.php" method="POST">
                 <div class="mb-4">
-                    <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                    <label for="register-username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
                     <input type="text" id="register-username" name="username" placeholder="Enter your username (register)" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div class="mb-4">
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                    <input type="text" id="register-email" name="email" placeholder="Enter your email (register)" type="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <label for="register-email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                    <input type="email" id="register-email" name="email" placeholder="Enter your email (register)" type="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div class="mb-4">
-                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                    <label for="register-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                     <input id="register-password" type="password" placeholder="Enter your password (register)" name="password" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div class="flex items-center justify-between">
@@ -136,11 +106,11 @@
         <h2 class="text-2xl font-semibold mb-4">Add a new article</h2>
         <form class="flex flex-col h-[390px] justify-evenly">
             <div class="mb-4">
-                <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                <label for="modal-title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
                 <input type="text" id="modal-title" placeholder="Article title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
             <div class="mb-4">
-                <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
+                <label for="modal-message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
                 <textarea id="modal-message" rows="7" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here...">
                     </textarea>
             </div>
@@ -212,7 +182,7 @@
         console.log(title, content);
         const endpoint = "server/create.php";
 
-        fetch(endpoint, {
+        await fetch(endpoint, {
             method: "POST",
             Headers: {
                 Accept: 'application.json',

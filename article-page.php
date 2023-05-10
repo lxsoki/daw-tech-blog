@@ -58,28 +58,57 @@ include('server/authentication.php');
     document.onreadystatechange = () => {
         if (document.readyState === "complete") {
             console.log('article page loaded');
-            console.log(localStorage.getItem('articleId'));
-
             getArticleDetails();
         }
     }
     const commentsContainer = document.getElementById('articleCommentsContainer');
     const articleContainer = document.getElementById('articleContainer');
 
-    function sendComment() {
-        console.log(document.getElementById('sendCommentInput').value);
+    async function sendComment() {
+        const article = JSON.parse(localStorage.getItem('articleId'));
+        const comment = document.getElementById('sendCommentInput').value;
+        const currentComments = document.querySelectorAll('.comment-added');
+        const noCommentsContainer = document.querySelector('.noCommentsContainer')
+        const endpoint = `server/addComment.php`;
+        if (comment.length > 0) {
+            await fetch(endpoint, {
+                method: "POST",
+                Headers: {
+                    Accept: 'application.json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    articleId: article.id,
+                    comment: comment
+                })
+            }).then((response) => {
+                return response.json();
+            }).then((data) => {
+                if (data.status === 201) {
+                    // console.log(data);
+                    // wipe all comments
+                    // recreate all comments from the api 
+                    // cuz we don't store current comments in a variable like a normal person :D :D :D
+                    document.getElementById('sendCommentInput').value = '';
+                    if (noCommentsContainer) noCommentsContainer.remove();
+                    currentComments.forEach(comment => comment.remove());
+                    getArticleDetails(true);
+                }
+            })
+        }
     }
 
-    async function getArticleDetails() {
+    async function getArticleDetails(onlyFetchComments = false) {
         const article = JSON.parse(localStorage.getItem('articleId'));
         const articleId = article.id;
         const endpoint = `server/getArticleDetails.php?id=${articleId}`;
-        appendArticleToDom(article);
+        if (!onlyFetchComments) {
+            appendArticleToDom(article);
+        }
         const request = await fetch(endpoint, {
             method: 'GET'
         });
         const response = await request.json();
-        console.log(response);
         if (response.data.length > 0) {
             console.log('comments found');
             response.data.forEach((comment) => {
@@ -94,7 +123,7 @@ include('server/authentication.php');
     function appendNoCommentContainer() {
         const noComments = document.createElement("div");
         const noCommentsSubtitle = document.createElement("p");
-        noComments.classList.add("flex", "flex-col", "items-center", "justify-center", "text-gray-400", "text-xl", "font-semibold", "mt-5");
+        noComments.classList.add("flex", "flex-col", "items-center", "justify-center", "text-gray-400", "text-xl", "font-semibold", "mt-5", "noCommentsContainer");
         noCommentsSubtitle.classList.add("text-md", "text-gray-400", "mt-2");
         noComments.innerText = "No comments found :( ";
         noCommentsSubtitle.innerText = "Be the first to leave a comment!";
@@ -132,8 +161,6 @@ include('server/authentication.php');
     }
 
     function appendCommentsToDom(comment) {
-        console.log(comment);
-        console.log(commentsContainer);
         const liElement = document.createElement("li");
         const liContainer = document.createElement("div");
         const authorContainer = document.createElement("div");
@@ -142,14 +169,13 @@ include('server/authentication.php');
         const commentContent = document.createElement("div");
         const commentCreatedAt = document.createElement("div");
 
-        // liElement.classList.add("pb-3", "sm:pb-4" , "border-solid", "border:gray-100", "dark:border-gray-600");
-        liElement.classList.add("border-solid", "border-2", "border-gray-600", "rounded", "bg-gray-800", "mb-2");
+        liElement.classList.add("border-solid", "border-2", "border-gray-600", "rounded", "bg-gray-800", "mb-2", "comment-added");
         liContainer.classList.add("flex", "items-center", "space-x-4");
         authorContainer.classList.add("p-[10px]", "min-w-0");
         userNameP.classList.add("text-sm", "font-medium", "text-gray-900", "truncate", "dark:text-white");
         userEmailP.classList.add("text-sm", "text-gray-500", "truncate");
         commentContent.classList.add("flex-1", "break-all");
-        commentCreatedAt.classList.add("inline-flex", "items-center", "text-base", "p-[10px]", "font-semibold", "text-gray-900", "dark:text-white");
+        commentCreatedAt.classList.add("inline-flex", "items-center", "p-[10px]", "text-sm", "text-gray-500", "truncate");
 
         commentsContainer.appendChild(liElement);
         liElement.appendChild(liContainer);
@@ -168,5 +194,7 @@ include('server/authentication.php');
 
     function goBack() {
         window.history.back();
+        window.localStorage.removeItem('articleId');
+        window.localStorage.removeItem('userId');
     }
 </script>
