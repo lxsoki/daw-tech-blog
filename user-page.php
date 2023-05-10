@@ -28,6 +28,7 @@ include('server/authentication.php');
         </div>
     </main>
     <?php include 'footer.php'; ?>
+    <script src="index.js"></script>
 </body>
 
 <!-- edit article modal -->
