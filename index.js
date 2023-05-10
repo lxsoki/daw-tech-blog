@@ -21,8 +21,10 @@ function addArticleToDom(article) {
   const articleContent = document.createElement("p");
   const articleAuthor = document.createElement("p");
   const articleCreatedAt = document.createElement("p");
+  const readMore = document.createElement("a");
   articleTitle.classList.add("text-xl", "font-bold", "mb-4");
   articleCreatedAt.classList.add("text-sm", "text-gray-400", "mb-2");
+  readMore.classList.add("text-sm", "text-gray-400", "mb-2");
   articleContent.classList.add("text-gray-300", "mt-2", "truncate");
   articleAuthor.classList.add("text-sm", "text-indigo-400", "mb-2", "mt-2");
   articleContentWrapper.classList.add("w-full", "md:w-2/3");
@@ -35,10 +37,18 @@ function addArticleToDom(article) {
   articleContentWrapper.appendChild(articleCreatedAt);
   articleContentWrapper.appendChild(articleContent);
   articleContentWrapper.appendChild(articleAuthor);
+  articleContentWrapper.appendChild(readMore);
   articleTitle.innerText = article.title;
   articleCreatedAt.innerText = `Created on ${article.created_at}`;
   articleContent.innerText = article.content;
   articleAuthor.innerText = `Author: ${article.username}`;
+  readMore.innerText = "Read more";
+  readMore.href = `article-page.php?id=${article.id}`;
+
+  readMore.addEventListener("click", (e) => { 
+    // e.preventDefault();
+    window.localStorage.setItem('articleId', JSON.stringify(article));
+  })
 }
 
 

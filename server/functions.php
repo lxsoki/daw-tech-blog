@@ -11,90 +11,6 @@ function error422($message) {
     echo json_encode($data);
     exit();
 }
-
-function updateCustomer($customerInput, $customerParams) {
-    global $conn;
-
-    if (!isset($customerParams['id'])) {
-        return error422('ID is required in the url');
-    } elseif ($customerParams['id'] == null) {
-        return error422('ID is required, please provide it.');
-    }
-
-
-    $id = mysqli_real_escape_string($conn, $customerParams['id']);
-
-    $name = mysqli_real_escape_string($conn, $customerInput['name']);
-    $email = mysqli_real_escape_string($conn, $customerInput['email']);
-    $phone = mysqli_real_escape_string($conn, $customerInput['phone']);
-
-    // currently update method requires all the params
-
-    if (empty(trim($name))) {
-        return error422('Name is required');
-
-    } elseif (empty(trim($email))) {
-        error422('Email is required');
-
-    } elseif (empty(trim($phone))) {
-        error422('Phone is required');
-    } else {
-
-        $query = "UPDATE customers SET name = '$name', email = '$email', phone = '$phone' WHERE id = '$id'";
-        $result = mysqli_query($conn, $query);
-        
-        if ($result) {
-            $data = [
-                'status' => 200,
-                'message' => 'Record updated successfully'
-            ];
-            header("HTTP/1.1 200 Record updated successfully");
-            return json_encode($data);
-        } else {
-            $data = [
-                'status' => 500,
-                'message' => 'Internal Server Error'
-            ];
-            header("HTTP/1.1 500 Internal Server Error");
-            return json_encode($data);
-        }
-
-    }
-}
-
-function deleteRecord($recordParams) {
-
-    global $conn;
-
-    if (!isset($recordParams['id'])) {
-        return error422('ID is required in the url');
-    } elseif ($recordParams['id'] == null) {
-        return error422('ID is required, please provide it.');
-    }
-
-    $id = mysqli_real_escape_string($conn, $recordParams['id']);
-
-    $query = "DELETE FROM articles WHERE id = '$id' LIMIT 1";
-    $result = mysqli_query($conn, $query);
-
-    if ($result) {
-        // change the status code to 200 if you want to see the msg in postman
-        $data = [
-            'status' => 204,
-            'message' => 'Record deleted successfully.'
-        ];
-        header("HTTP/1.1 204 OK");
-        return json_encode($data);
-    } else {
-        $data = [
-            'status' => 404,
-            'message' => 'Record not found.'
-        ];
-        header("HTTP/1.1 404 Not Found");
-        return json_encode($data);
-    }
-}
-
 // articles
 
 // toDo BIIIIG refactor
@@ -204,7 +120,7 @@ function storeArticle($params, $userId) {
 
 function getArticles() {
     global $conn;
-    $query = "SELECT articles.title, articles.content, articles.created_at ,users.username FROM articles LEFT JOIN `users` ON articles.userId = users.id ORDER BY articles.created_at DESC;";
+    $query = "SELECT articles.title, articles.content, articles.created_at, articles.id, users.username FROM articles LEFT JOIN `users` ON articles.userId = users.id ORDER BY articles.created_at DESC;";
     $query_run = mysqli_query($conn, $query);
 
     if ($query_run) {
@@ -262,10 +178,10 @@ function getArticle($params) {
 
         } else {
             $data = [
-                'status' => 404,
-                'message' => 'No Record Found'
+                'status' => 200,
+                'message' => 'No Records Found'
             ];
-            header("HTTP/1.1 404 Not Found");
+            header("HTTP/1.1 200 Empty Records");
             return json_encode($data);
         }
     } else {
@@ -284,7 +200,7 @@ function getArticlesByUserId($params) {
         return error422('ID is required');
     }
     $userId = mysqli_real_escape_string($conn, $params['id']);
-    $query = "SELECT * FROM articles WHERE userId = '$userId'";
+    $query = "SELECT * FROM articles WHERE userId = '$userId' ORDER BY created_at DESC";
     $queryResult = mysqli_query($conn, $query);
 
     if ($queryResult) {
@@ -313,6 +229,77 @@ function getArticlesByUserId($params) {
         ];
         header("HTTP/1.1 500 Internal Server Error");
         return json_encode($data);
+    }
+}
+
+function getArticleDetails($params) {
+    global $conn;
+
+    if ($params['id'] == null) {
+        return error422('Article ID is required');
+    }
+    
+    $articleId = mysqli_real_escape_string($conn, $params['id']);
+    // $query = "SELECT * FROM comments WHERE articleId = '$articleId'";
+    $query = "SELECT comments.commentId, comments.userId, comments.articleId, comments.comment, comments.created_at, users.username, articles.title, articles.content, articles.created_at as article_created_at FROM comments LEFT JOIN users ON users.id = comments.userId LEFT JOIN articles ON articles.id = comments.articleId WHERE articleId = '$articleId' ORDER BY comments.created_at DESC";
+    //$query = "SELECT comments.commentId, comments.userId, comments.articleId, comments.comment, comments.created_at, articles.title, articles.content, articles.created_at as article_created_at FROM comments LEFT JOIN articles ON articles.id = comments.articleId WHERE articleId = '$articleId' ORDER BY comments.created_at DESC;";
+    $queryResult = mysqli_query($conn, $query);
+
+    if ($queryResult) {
+        if (mysqli_num_rows($queryResult) > 0) {
+            $res = mysqli_fetch_all($queryResult, MYSQLI_ASSOC);
+            $data = [
+                'status' => 200,
+                'messages' => 'Records fetched successfully',
+                'data' => $res
+            ];
+            header("HTTP/1.1 200 OK");
+            return json_encode($data);
+        } else {
+            $data = [
+                'status' => 200,
+                'message' => 'No Record Found',
+                'data' => []
+            ];
+            header("HTTP/1.1 200 No Record Found");
+            return json_encode($data);
+        }
+    } else {
+        $data = [
+            'status' => 500,
+            'message' => 'Internal Server Error'
+        ];
+        header("HTTP/1.1 500 Internal Server Error");
+        return json_encode($data);
+    }
+}
+
+function addComment($params, $userId) {
+    global $conn;
+    $comment = mysqli_real_escape_string($conn, $params['comment']);
+    $articleId = mysqli_real_escape_string($conn, $params['articleId']);
+    $userId = mysqli_real_escape_string($conn, $userId);
+
+    if (empty((trim($articleId))) || empty((trim($comment)))) {
+        error422('comment and articleId are required!');
+    } else {
+        $query = "INSERT INTO comments (userId, articleId, comment) values ('$userId', '$articleId', '$comment')";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            $data = [
+                'status' => 201,
+                'message' => 'Comment created successfully'
+            ];
+            header("HTTP/1.1 201 Comment created successfully");
+            return json_encode($data);
+        } else {
+            $data = [
+                'status' => 500,
+                'message' => 'Internal Server Error'
+            ];
+            header("HTTP/1.1 500 Internal Server Error");
+            return json_encode($data);
+        }
     }
 }
 

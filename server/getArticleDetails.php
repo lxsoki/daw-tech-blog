@@ -12,13 +12,12 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 if ($requestMethod == "GET") {
 
     if (isset($_GET['id'])) {
-        // var_dump($_GET['id']);
-        $articles = getArticlesByUserId($_GET);
-        echo $articles;
+        $articleDetails = getArticleDetails($_GET);
+        echo $articleDetails;
 
     } else {
-        // $articleList = getArticles();
-        // echo $articleList;
+        // $articleDetails = getArticleDetails();
+        // echo $articleDetails;
     }
 
 } else {
@@ -29,3 +28,4 @@ if ($requestMethod == "GET") {
     header("HTTP/1.1 405 Method Not Allowed");
     echo json_encode($data);
 }
+// getArticlesById

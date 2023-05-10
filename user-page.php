@@ -25,20 +25,10 @@ include('server/authentication.php');
                 <h5>user name: <?= $_SESSION['auth_user']['username'] ?></h5>
             </article>
 
-            <!-- test with textarea pre completed -->
-            <article id="test-lol" class="rounded-md shadow-md bg-gray-800 p-6">
-                <div class="w-full">
-                    <h2 class="text-xl font-bold mb-4">placeholder title</h2>
-                    <div>
-                        <!-- <textarea id="test1" disabled="true" rows="7" wrap="soft" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        </textarea> -->
-                    </div>
-                </div>
-                
-            </article>
         </div>
     </main>
     <?php include 'footer.php'; ?>
+    <script src="index.js"></script>
 </body>
 
 <!-- edit article modal -->
@@ -47,11 +37,11 @@ include('server/authentication.php');
         <h2 class="text-2xl font-semibold mb-4">Edit article</h2>
         <form class="flex flex-col h-[390px] justify-evenly">
             <div class="mb-4">
-                <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                <label for="e-modal-title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
                 <input type="text" id="e-modal-title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
             <div class="mb-4">
-                <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
+                <label for="e-modal-message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
                 <textarea id="e-modal-message" rows="7" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     </textarea>
             </div>
@@ -80,6 +70,10 @@ include('server/authentication.php');
         const articleActions = document.createElement("div");
         const articleEditBtn = document.createElement("button");
         const articleDeleteBtn = document.createElement("button");
+        const articleCommentsBtn = document.createElement("button");
+        const editBtnIcon = document.createElement("span");
+        const deleteBtnIcon = document.createElement("span");
+        const commentsBtnIcon = document.createElement("span");
         articleTitle.classList.add("text-xl", "font-bold", "mb-4");
         articleContent.classList.add("break-all")
         articleCreatedAt.classList.add("text-sm", "text-gray-400", "mb-2");
@@ -91,9 +85,29 @@ include('server/authentication.php');
         articleActions.classList.add("flex", "flex-row", "justify-end", "items-center", "mb-[15px]", "mt-[15px]");
         articleEditBtn.classList.add("bg-gray-700", "hover:bg-gray-600", "text-white", "font-bold", "py-2", "px-4", "rounded");
         articleDeleteBtn.classList.add("bg-red-600", "hover:bg-red-700", "text-white", "font-bold", "py-2", "px-4", "rounded", "ml-4");
-        articleEditBtn.innerText = "Edit";
-        articleDeleteBtn.innerText = "Delete";
+        articleCommentsBtn.classList.add("bg-gray-700", "hover:bg-gray-600", "text-white", "font-bold", "py-2", "px-4", "rounded", "mr-4");
+        
+        // articleEditBtn.innerText = "Edit";
+        // articleDeleteBtn.innerText = "Delete";
+        // articleCommentsBtn.innerText = "Comments";
 
+        // article comment click handler
+        articleCommentsBtn.addEventListener('click', () => {
+            console.log('comments btn clicked');
+            window.location.href = `article-page.php?id=${article.id}`;
+            window.localStorage.setItem('articleId', JSON.stringify(article));
+        });
+
+        // add icons to btns
+        commentsBtnIcon.classList.add("iconify");
+        editBtnIcon.classList.add("iconify");
+        deleteBtnIcon.classList.add("iconify");
+        commentsBtnIcon.setAttribute("data-icon", "mdi:comments");
+        editBtnIcon.setAttribute("data-icon", "mdi:pencil");
+        deleteBtnIcon.setAttribute("data-icon", "mdi:delete");
+        articleCommentsBtn.appendChild(commentsBtnIcon);
+        articleEditBtn.appendChild(editBtnIcon);
+        articleDeleteBtn.appendChild(deleteBtnIcon);
 
         mainContainer.appendChild(nArt);
         nArt.appendChild(articleWrapper);
@@ -102,6 +116,7 @@ include('server/authentication.php');
         articleContentWrapper.appendChild(articleCreatedAt);
         articleContentWrapper.appendChild(articleContent);
         articleContentWrapper.appendChild(articleActions);
+        articleActions.appendChild(articleCommentsBtn);
         articleActions.appendChild(articleEditBtn);
         articleActions.appendChild(articleDeleteBtn);
         articleTitle.innerText = article.title;
@@ -180,7 +195,7 @@ include('server/authentication.php');
     async function getArticlesForUser() {
         // user-page method
         const userId = '<?= $_SESSION['auth_user']['id'] ?>';
-        const endpoint = `server/getArticlesById.php?id=${userId}`;
+        const endpoint = `server/getArticlesByUserId.php?id=${userId}`;
         const request = await fetch(endpoint, {
             method: 'GET'
         });
@@ -199,7 +214,8 @@ include('server/authentication.php');
     // check if the page has loaded
     document.onreadystatechange = () => {
         if (document.readyState === "complete") {
-            console.log('page loaded');
+            console.log('user-page loaded');
+            window.localStorage.removeItem('articleId');
             getArticlesForUser();
         }
     }
