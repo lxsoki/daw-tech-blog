@@ -1,7 +1,7 @@
 <header class="bg-gray-800 shadow-md sticky">
     <nav class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
-           
+
             <a href="index.php" class="text-2xl font-semibold text-white">Share your thoughts </a>
             <div class="hidden lg:flex" id="nav-items">
                 <a href="index.php" class="mx-4 text-white hover:text-gray-300">Home</a>
@@ -36,10 +36,10 @@
         <div class="flex flex-col hidden lg:hidden mt-4 space-y-2" id="mobile-nav">
             <a href="index.php" class="mx-4 text-white hover:text-gray-300">Home</a>
             <?php if (isset($_SESSION['authenticated'])) : ?>
-                    <div class="relative inline-block">
-                        <a href="user-page.php" class="mx-4 text-white hover:text-gray-300 py-2">My Posts</a>
-                    </div>
-                <?php endif ?>
+                <div class="relative inline-block">
+                    <a href="user-page.php" class="mx-4 text-white hover:text-gray-300 py-2">My Posts</a>
+                </div>
+            <?php endif ?>
         </div>
     </nav>
 </header>
@@ -199,6 +199,7 @@
                 console.log(data);
                 // check if we are on the user page
                 if (window.location.pathname.includes('user-page')) {
+                    console.log('??????')
                     currentArticles.forEach(article => article.remove());
                     getArticlesForUser();
                     modal.classList.add("hidden");
@@ -207,9 +208,6 @@
                     getAllRecords();
                     modal.classList.add("hidden");
                 }
-                // currentArticles.forEach(article => article.remove());
-                // getAllRecords();
-                // modal.classList.add("hidden");
             }
         });
     }
@@ -241,8 +239,10 @@
         const articleContent = document.createElement("p");
         const articleAuthor = document.createElement("p");
         const articleCreatedAt = document.createElement("p");
+
         articleTitle.classList.add("text-xl", "font-bold", "mb-4");
         articleCreatedAt.classList.add("text-sm", "text-gray-400", "mb-2");
+
         articleContent.classList.add("text-gray-300", "mt-2");
         articleAuthor.classList.add("text-sm", "text-indigo-400", "mb-2", "mt-2");
         articleContentWrapper.classList.add("w-full", "md:w-2/3");
@@ -255,6 +255,19 @@
         articleContentWrapper.appendChild(articleCreatedAt);
         articleContentWrapper.appendChild(articleContent);
         articleContentWrapper.appendChild(articleAuthor);
+
+        if (window.location.pathname === '/daw-tech-blog/' || window.location.pathname === '/daw-tech-blog/index.php') {
+            const readMore = document.createElement("a");
+            readMore.classList.add("text-sm", "text-gray-400", "mb-2");
+            articleContentWrapper.appendChild(readMore);
+            readMore.innerText = "Read more";
+            readMore.href = `article-page.php?id=${article.id}`;
+
+            readMore.addEventListener("click", (e) => {
+                window.localStorage.setItem('articleId', JSON.stringify(article));
+            })
+        }
+
         articleTitle.innerText = article.title;
         articleCreatedAt.innerText = `Created on ${article.created_at}`;
         articleContent.innerText = article.content;
@@ -274,5 +287,4 @@
             addArticleToDom(record);
         });
     }
-
 </script>
