@@ -65,3 +65,7 @@ header {
 .carousel-indicator.active {
   background: #fff;
 }
+
+head title {
+  color: red;
+}
