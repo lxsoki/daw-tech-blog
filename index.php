@@ -27,11 +27,23 @@ session_start();
   <?php include 'footer.php'; ?>
 
   <!-- js land -->
-  <script src="index.js"></script>
+  <!-- <script src="index.js"></script> -->
   <script src="carousel.js"></script>
 </body>
-<script>
 
+<script>
+  const articlesMainPage = document.getElementById("mainContainer");
+  document.onreadystatechange = () => {
+    if (document.readyState === "complete") {
+      // init app code after page has finished loading
+      console.log('page loaded');
+      getAllRecords();
+    }
+  }
+  document.getElementById("menu-toggle").addEventListener("click", () => {
+    const mobileNav = document.getElementById("mobile-nav");
+    mobileNav.classList.toggle("hidden");
+  });
 </script>
 
 </html>

@@ -87,17 +87,6 @@ include('server/authentication.php');
         articleEditBtn.classList.add("bg-gray-700", "hover:bg-gray-600", "text-white", "font-bold", "py-2", "px-4", "rounded");
         articleDeleteBtn.classList.add("bg-red-600", "hover:bg-red-700", "text-white", "font-bold", "py-2", "px-4", "rounded", "ml-4");
         articleCommentsBtn.classList.add("bg-gray-700", "hover:bg-gray-600", "text-white", "font-bold", "py-2", "px-4", "rounded", "mr-4");
-        
-        // articleEditBtn.innerText = "Edit";
-        // articleDeleteBtn.innerText = "Delete";
-        // articleCommentsBtn.innerText = "Comments";
-
-        // article comment click handler
-        articleCommentsBtn.addEventListener('click', () => {
-            console.log('comments btn clicked');
-            window.location.href = `article-page.php?id=${article.id}`;
-            window.localStorage.setItem('articleId', JSON.stringify(article));
-        });
 
         // add icons to btns
         commentsBtnIcon.classList.add("iconify");
@@ -124,6 +113,7 @@ include('server/authentication.php');
         articleCreatedAt.innerText = `Created on ${article.created_at}`;
         articleContent.innerText = article.content;
 
+        // article edit click handler
         articleEditBtn.addEventListener('click', () => {
             console.log('edit article', article.id, article.userId, article.content, article.title);
             window.localStorage.setItem('editingArticle', JSON.stringify(article));
@@ -132,6 +122,7 @@ include('server/authentication.php');
             document.getElementById('e-modal-message').value = article.content;
         });
 
+        // article delete click handler
         articleDeleteBtn.addEventListener('click', async () => {
             console.log('delete article', article.id, article.userId, article.content, article.title);
             if (confirm('Are you sure you want to delete this article?')) {
@@ -154,15 +145,21 @@ include('server/authentication.php');
                 console.log('no delete');
             }
         });
+
+        // article comment click handler
+        articleCommentsBtn.addEventListener('click', () => {
+            console.log('comments btn clicked');
+            window.location.href = `article-page.php?id=${article.id}`;
+            window.localStorage.setItem('articleId', JSON.stringify(article));
+        });
     }
 
 
     async function submitEditedRecord() {
         const articleToEdit = JSON.parse(window.localStorage.getItem('editingArticle'));
         console.log('submit edited record', articleToEdit);
-        // after everything is ok, remove the item from local storage
-        // window.localStorage.removeItem('editingArticle');
         const currentArticles = document.querySelectorAll('.article-added');
+        const noArticleContainer = document.querySelector('.noArticleContainer');
         const endpoint = `server/update.php?id=${articleToEdit.id}`;
         const request = await fetch(endpoint, {
                 method: 'PUT',
@@ -175,6 +172,7 @@ include('server/authentication.php');
                 if (data.status === 200) {
                     console.log('article updated');
                     currentArticles.forEach(article => article.remove());
+                    if (noArticleContainer) noArticleContainer.remove();
                     getArticlesForUser();
                     document.getElementById('editRecordModal').classList.add('hidden');
                     window.localStorage.removeItem('editingArticle');
@@ -191,10 +189,23 @@ include('server/authentication.php');
         window.localStorage.removeItem('editingArticle');
     }
 
-
+    function addNoArticleContainerToDom() {
+        const noArticleContainer = document.createElement("div");
+        const noArticleTitle = document.createElement("h2");
+        const noArticleMessage = document.createElement("p");
+        noArticleContainer.classList.add("rounded-md", "shadow-md", "bg-gradient-to-r", "from-gray-800", "hover:bg-slate-500", "p-6", "noArticleContainer"); // og color bg-gray-800
+        noArticleTitle.classList.add("text-xl", "font-bold", "mb-4");
+        noArticleMessage.classList.add("text-sm", "text-gray-400", "mb-2");
+        noArticleTitle.innerText = 'No articles found';
+        noArticleMessage.innerText = 'You have not posted any articles yet. Click the button above to create one.';
+        mainContainer.appendChild(noArticleContainer);
+        noArticleContainer.appendChild(noArticleTitle);
+        noArticleContainer.appendChild(noArticleMessage);
+    }
 
     async function getArticlesForUser() {
         // user-page method
+        const noArticleContainer = document.querySelector('.noArticleContainer');
         const userId = '<?= $_SESSION['auth_user']['id'] ?>';
         const endpoint = `server/getArticlesByUserId.php?id=${userId}`;
         const request = await fetch(endpoint, {
@@ -205,11 +216,18 @@ include('server/authentication.php');
         if (response.status === 404) {
             console.log('no articles found for this user')
         } else {
-
+            // toDo
+            // if response data is empty append an empty article container 
+            // similar to the comments one
             console.log(response);
-            response.data.forEach((article) => {
-                addArticleToDom(article);
-            });
+            if (response.data.length > 0) {
+                if (noArticleContainer) noArticleContainer.remove();
+                response.data.forEach((article) => {
+                    addArticleToDom(article);
+                });
+            } else {
+                addNoArticleContainerToDom();
+            }
         }
     }
     // check if the page has loaded
