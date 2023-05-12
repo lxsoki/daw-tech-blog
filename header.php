@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center">
 
       <a href="index.php"
-        class="text-3xl font-semibold text-indigo-500 opacity-100 animate-bounce font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">Share
+        class="text-2xl font-semibold text-indigo-500 opacity-100 animate-bounce font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">Share
         your thoughts ☺ </a>
       <div class="hidden lg:flex" id="nav-items">
         <a href="index.php" class="mx-4 text-white hover:text-gray-300">Home</a>
