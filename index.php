@@ -15,16 +15,16 @@ session_start();
 </head>
 
 <body class="bg-gray-900 text-white flex flex-col min-h-screen">
-  <?php include 'header.php';?>
+  <?php include 'header.php'; ?>
 
   <main class="container mx-auto px-6 py-8 flex-grow">
-    <?php include 'carousel.php';?>
+    <?php include 'carousel.php'; ?>
     <!-- articles container, content will pe generated dinamically via http calls & js -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="mainContainer"></div>
     <!-- articles container end -->
   </main>
 
-  <?php include 'footer.php';?>
+  <?php include 'footer.php'; ?>
 
   <!-- js land -->
   <script src="index.js"></script>

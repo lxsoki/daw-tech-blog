@@ -216,10 +216,11 @@ function getArticlesByUserId($params) {
             return json_encode($data);
         } else {
             $data = [
-                'status' => 404,
-                'message' => 'No Record Found'
+                'status' => 200,
+                'message' => 'No Records Found',
+                'data' => []
             ];
-            header("HTTP/1.1 404 Not Found");
+            header("HTTP/1.1 200 No Records Found");
             return json_encode($data);
         }
     } else {
