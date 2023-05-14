@@ -2,8 +2,9 @@
     <nav class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
 
-            <a href="index.php" class="text-3xl font-semibold text-indigo-500 opacity-100 font-mono italic text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">Share
-                your thoughts</a>
+            <a href="index.php" class="text-3xl font-semibold text-indigo-500 opacity-100 font-mono italic text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+                Share it
+            </a>
             <div class="hidden lg:flex" id="nav-items">
                 <a href="index.php" class="mx-4 text-white hover:text-gray-300">Home</a>
                 <?php if (isset($_SESSION['authenticated'])) : ?>
@@ -13,7 +14,7 @@
                 <?php endif ?>
             </div>
             <!-- log in btn -->
-            <div class="flex justify-between w-[220px]">
+            <div class="flex justify-evenly w-[220px]">
                 <?php if (!isset($_SESSION['authenticated'])) : ?>
                     <button id="loginButton" class="bg-gradient-to-r from-gray-700 to-slate-500 text-white font-bold py-2 px-4 rounded">
                         Log In
@@ -21,8 +22,8 @@
                 <?php endif ?>
 
                 <?php if (isset($_SESSION['authenticated'])) : ?>
-                    <button id="addRecordBtn" class="bg-gradient-to-r from-gray-700 to-slate-500 hover:from-violet-900 hover:to-violet-700 text-white font-bold py-2 px-4 rounded">
-                        Add a Post
+                    <button id="addRecordBtn" class="py-2 px-4 bg-gradient-to-r from-gray-700 to-slate-500 hover:from-violet-900 hover:to-violet-700 text-white font-bold rounded">
+                        Post
                     </button>
                     <button id="loginButton" class="bg-gradient-to-r from-gray-700 to-slate-500 hover:from-slate-900 hover:to-slate-600 text-white font-bold py-2 px-4 rounded" onclick=logout()>
                         Log Out
@@ -127,6 +128,11 @@
 </div>
 
 <script>
+    document.getElementById("menu-toggle").addEventListener("click", () => {
+        const mobileNav = document.getElementById("mobile-nav");
+        mobileNav.classList.toggle("hidden");
+    });
+
     document.getElementById('loginButton').addEventListener('click', function() {
         document.getElementById('loginModal').classList.remove('hidden');
     });
@@ -242,7 +248,10 @@
         const articleContent = document.createElement("p");
         const articleAuthor = document.createElement("p");
         const articleCreatedAt = document.createElement("p");
+        const authorReadMoreContainer = document.createElement("div");
 
+
+        authorReadMoreContainer.classList.add("flex", "justify-between", "items-center");
         articleTitle.classList.add("text-xl", "font-bold", "mb-4");
         articleCreatedAt.classList.add("text-sm", "text-gray-400", "mb-2");
 
@@ -250,8 +259,7 @@
         articleAuthor.classList.add("text-sm", "text-indigo-400", "mb-2", "mt-2");
         articleContentWrapper.classList.add("w-full", "md:w-2/3");
         articleWrapper.classList.add("flex", "flex-col", "md:flex-row", "items-center");
-        nArt.classList.add("rounded-md", "shadow-md", "bg-gradient-to-r", "from-gray-800", "hover:bg-slate-500", "p-6",
-            "article-added"); // bg-gray-800 or color
+        nArt.classList.add("rounded-md", "shadow-md", "bg-gradient-to-r", "from-gray-800", "hover:bg-slate-500", "p-6", "article-added");
         articlesMainPage.appendChild(nArt);
         nArt.appendChild(articleWrapper);
         articleWrapper.appendChild(articleContentWrapper);
@@ -260,17 +268,26 @@
         articleContentWrapper.appendChild(articleContent);
         articleContentWrapper.appendChild(articleAuthor);
 
-        if (window.location.pathname === '/daw-tech-blog/' || window.location.pathname === '/daw-tech-blog/index.php') {
-            const readMore = document.createElement("a");
-            readMore.classList.add("text-sm", "text-gray-400", "mb-2");
-            articleContentWrapper.appendChild(readMore);
-            readMore.innerText = "Read more";
-            readMore.href = `article-page.php?id=${article.id}`;
+        authorReadMoreContainer.appendChild(articleAuthor);
 
-            readMore.addEventListener("click", (e) => {
-                window.localStorage.setItem('articleId', JSON.stringify(article));
-            })
+        // scuffed way of checking if the user is logged or not :)
+        const isLogged = window.localStorage.getItem('userId');
+
+        if (isLogged) {
+            if (window.location.pathname === '/daw-tech-blog/' || window.location.pathname === '/daw-tech-blog/index.php') {
+                const readMore = document.createElement("a");
+                readMore.classList.add("text-sm", "text-gray-400", "mb-2", "italic");
+                // articleContentWrapper.appendChild(readMore);
+                authorReadMoreContainer.appendChild(readMore);
+                readMore.innerText = "Read more...";
+                readMore.href = `article-page.php?id=${article.id}`;
+
+                readMore.addEventListener("click", (e) => {
+                    window.localStorage.setItem('articleId', JSON.stringify(article));
+                })
+            }
         }
+        articleContentWrapper.appendChild(authorReadMoreContainer);
 
         articleTitle.innerText = article.title;
         articleCreatedAt.innerText = `Created on ${article.created_at}`;

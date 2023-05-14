@@ -18,13 +18,22 @@ include('server/authentication.php');
 <body class="bg-gray-900 text-white flex flex-col min-h-screen">
     <?php include 'header.php'; ?>
     <main class="container mx-auto px-6 py-8 flex-grow">
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-8" id="goBackLoL" onclick="window.history.back();">
+            <div class="bg-gray-800 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded inline-flex items-center mb-5 cursor-pointer">
+                <span class="iconify mr-2" data-icon="mdi:arrow-left" data-inline="false" data-width="24" data-height="24"></span>
+                <span>Go Back</span>
+            </div>
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-1 gap-8" id="userPageContainer">
-            <article id="ignore-this" class="rounded-md shadow-md bg-gray-800 p-6">
+
+            <!-- uncomment this article to debug -->
+            <!-- it displated the logged user information -->
+            <!-- <article id="ignore-this" class="rounded-md shadow-md bg-gray-800 p-6">
                 <div>user page works? :D</div>
                 <h5>user email: <?= $_SESSION['auth_user']['email'] ?></h5>
                 <h5>user id: <?= $_SESSION['auth_user']['id'] ?></h5>
                 <h5>user name: <?= $_SESSION['auth_user']['username'] ?></h5>
-            </article>
+            </article> -->
 
         </div>
     </main>
@@ -59,6 +68,11 @@ include('server/authentication.php');
 </div>
 
 <script>
+    document.getElementById("menu-toggle").addEventListener("click", () => {
+        const mobileNav = document.getElementById("mobile-nav");
+        mobileNav.classList.toggle("hidden");
+    });
+
     const mainContainer = document.getElementById('userPageContainer');
 
     function addArticleToDom(article) {
@@ -217,7 +231,7 @@ include('server/authentication.php');
             console.log('no articles found for this user')
         } else {
             // toDo
-            // if response data is empty append an empty article container 
+            // if response data is empty append an empty article container
             // similar to the comments one
             console.log(response);
             if (response.data.length > 0) {

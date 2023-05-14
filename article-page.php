@@ -62,6 +62,12 @@ include('server/authentication.php');
             getArticleDetails();
         }
     }
+
+    document.getElementById("menu-toggle").addEventListener("click", () => {
+        const mobileNav = document.getElementById("mobile-nav");
+        mobileNav.classList.toggle("hidden");
+    });
+
     const commentsContainer = document.getElementById('articleCommentsContainer');
     const articleContainer = document.getElementById('articleContainer');
 
@@ -88,7 +94,7 @@ include('server/authentication.php');
                 if (data.status === 201) {
                     // console.log(data);
                     // wipe all comments
-                    // recreate all comments from the api 
+                    // recreate all comments from the api
                     // cuz we don't store current comments in a variable like a normal person :D :D :D
                     document.getElementById('sendCommentInput').value = '';
                     if (noCommentsContainer) noCommentsContainer.remove();

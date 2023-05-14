@@ -27,7 +27,7 @@ session_start();
     <?php include 'footer.php'; ?>
 
     <!-- js land -->
-    <!-- <script src="index.js"></script> -->
+    <script src="index.js" defer></script>
     <script src="carousel.js"></script>
 </body>
 
