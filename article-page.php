@@ -178,9 +178,9 @@ include('server/authentication.php');
 
         liElement.classList.add("border-solid", "border-2", "border-gray-600", "rounded", "bg-gray-800", "mb-2", "comment-added");
         liContainer.classList.add("flex", "items-center", "space-x-4");
-        authorContainer.classList.add("p-[10px]", "min-w-0");
+        authorContainer.classList.add("p-[10px]", "max-w-[95px]", "w-[95px]");
         userNameP.classList.add("text-sm", "font-medium", "text-gray-900", "truncate", "dark:text-white");
-        userEmailP.classList.add("text-sm", "text-gray-500", "truncate");
+        userEmailP.classList.add("text-sm", "truncate");
         commentContent.classList.add("flex-1", "break-all");
         commentCreatedAt.classList.add("inline-flex", "items-center", "p-[10px]", "text-sm", "text-gray-500", "truncate");
 
@@ -192,8 +192,15 @@ include('server/authentication.php');
         liContainer.appendChild(commentContent);
         liContainer.appendChild(commentCreatedAt);
 
+        const userId = JSON.parse(window.localStorage.getItem('articleId')).userId;
+        const commentId = comment.userId;
+        const isAuthor = userId === commentId;
+
+        isAuthor ? userEmailP.classList.add("text-fuchsia-600", "italic") : userEmailP.classList.add("text-gray-500", "italic");
+
         userNameP.innerText = comment.username;
-        userEmailP.innerText = comment.email || 'no email';
+        // userEmailP.innerText = comment.email || 'no email';
+        userEmailP.innerText = isAuthor ? 'Author' : 'Commenter';
         commentContent.innerText = comment.comment;
         commentCreatedAt.innerText = moment(comment.created_at).fromNow();
 
