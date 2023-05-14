@@ -2,8 +2,9 @@
     <nav class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
 
-            <a href="index.php" class="text-3xl font-semibold text-indigo-500 opacity-100 font-mono italic text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
-                Share it
+            <a href="index.php" class="flex flex-col items-start text-2xl font-semibold text-indigo-500 opacity-100 font-mono italic text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+                <span>Share it...</span>
+                <span>Discuss it...</span>
             </a>
             <div class="hidden lg:flex" id="nav-items">
                 <a href="index.php" class="mx-4 text-white hover:text-gray-300">Home</a>
@@ -257,7 +258,7 @@
 
         articleContent.classList.add("text-gray-300", "mt-2");
         articleAuthor.classList.add("text-sm", "text-indigo-400", "mb-2", "mt-2");
-        articleContentWrapper.classList.add("w-full", "md:w-2/3");
+        articleContentWrapper.classList.add("w-full"); // md:w-2/3
         articleWrapper.classList.add("flex", "flex-col", "md:flex-row", "items-center");
         nArt.classList.add("rounded-md", "shadow-md", "bg-gradient-to-r", "from-gray-800", "hover:bg-slate-500", "p-6", "article-added");
         articlesMainPage.appendChild(nArt);
@@ -275,6 +276,7 @@
 
         if (isLogged) {
             if (window.location.pathname === '/daw-tech-blog/' || window.location.pathname === '/daw-tech-blog/index.php') {
+                articleContent.classList.add("truncate");
                 const readMore = document.createElement("a");
                 readMore.classList.add("text-sm", "text-gray-400", "mb-2", "italic");
                 // articleContentWrapper.appendChild(readMore);
