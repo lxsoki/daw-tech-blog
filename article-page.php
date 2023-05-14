@@ -117,12 +117,12 @@ include('server/authentication.php');
         });
         const response = await request.json();
         if (response.data.length > 0) {
-            console.log('comments found');
+            // console.log('comments found');
             response.data.forEach((comment) => {
                 appendCommentsToDom(comment);
             });
         } else {
-            console.log('no comments found :(');
+            // console.log('no comments found :(');
             appendNoCommentContainer();
         }
     }

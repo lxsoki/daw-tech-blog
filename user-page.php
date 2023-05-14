@@ -129,7 +129,7 @@ include('server/authentication.php');
 
         // article edit click handler
         articleEditBtn.addEventListener('click', () => {
-            console.log('edit article', article.id, article.userId, article.content, article.title);
+            // console.log('edit article', article.id, article.userId, article.content, article.title);
             window.localStorage.setItem('editingArticle', JSON.stringify(article));
             document.getElementById('editRecordModal').classList.remove('hidden');
             document.getElementById('e-modal-title').value = article.title;
@@ -162,7 +162,7 @@ include('server/authentication.php');
 
         // article comment click handler
         articleCommentsBtn.addEventListener('click', () => {
-            console.log('comments btn clicked');
+            // console.log('comments btn clicked');
             window.location.href = `article-page.php?id=${article.id}`;
             window.localStorage.setItem('articleId', JSON.stringify(article));
         });
@@ -171,7 +171,7 @@ include('server/authentication.php');
 
     async function submitEditedRecord() {
         const articleToEdit = JSON.parse(window.localStorage.getItem('editingArticle'));
-        console.log('submit edited record', articleToEdit);
+        // console.log('submit edited record', articleToEdit);
         const currentArticles = document.querySelectorAll('.article-added');
         const noArticleContainer = document.querySelector('.noArticleContainer');
         const endpoint = `server/update.php?id=${articleToEdit.id}`;
@@ -233,7 +233,7 @@ include('server/authentication.php');
             // toDo
             // if response data is empty append an empty article container
             // similar to the comments one
-            console.log(response);
+            // console.log(response);
             if (response.data.length > 0) {
                 if (noArticleContainer) noArticleContainer.remove();
                 response.data.forEach((article) => {
