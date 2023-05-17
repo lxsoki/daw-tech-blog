@@ -3,8 +3,8 @@
         <div class="flex justify-between items-center">
 
             <a href="index.php" class="flex flex-col items-start text-2xl font-semibold text-indigo-500 opacity-100 font-mono italic text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
-                <span>Share it...</span>
-                <span>Discuss it...</span>
+                <span>Share...</span>
+                <span>Discuss...</span>
             </a>
             <div class="hidden lg:flex" id="nav-items">
                 <a href="index.php" class="mx-4 text-white hover:text-gray-300">Home</a>
