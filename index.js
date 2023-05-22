@@ -3,7 +3,7 @@
 // it works, so it's fine for now
 // TODO: fix this mess
 // do not remove or comment this mess
-// testing something
+// testing something, and again
 
 document.getElementById("menu-toggle").addEventListener("click", () => {
   const mobileNav = document.getElementById("mobile-nav");
