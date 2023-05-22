@@ -3,7 +3,7 @@
 // it works, so it's fine for now
 // TODO: fix this mess
 // do not remove or comment this mess
-// testing something git related from mac os, and again, and again
+// testing something git related from mac os, and again, and again, aaand again
 // testing something git related, from windows
 
 document.getElementById("menu-toggle").addEventListener("click", () => {
